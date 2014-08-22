@@ -31,6 +31,7 @@
     <Compile Include="StatValues.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="key.txt" />
     <Content Include="Report_template.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
