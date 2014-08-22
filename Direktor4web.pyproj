@@ -30,5 +30,8 @@
     <Compile Include="ParseInput.py" />
     <Compile Include="StatValues.py" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Report_template.html" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>

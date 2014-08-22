@@ -1,42 +1,24 @@
 # Check whether the input file and output folder exist, create subFolder
-import sys
 import time
 import os
-
-def TestDirs(inDir, outDir):
-    try:
-        os.chdir(inDir)
-    except Exception:
-        print('Failed to open the inDir\n\t' + inDir + '\n')
-        sys.exit
-    else:
-        print('The intput folder is found:\n\t' + inDir + '\n')
-        inputFiles = os.listdir(inDir)
-        print(str(len(inputFiles)) + ' files to process')
-        for inputFileName in inputFiles:
-            print '\t' + inputFileName
-
-    if os.path.exists(outDir): 
-        t = time.localtime()
-        outDir = outDir + '_' + str(t[3]) + str(t[4]) + str(t[5])
-        os.mkdir(outDir)
-        print('The output folder is created:\n\t' + outDir + '\n')
-    else:
-        os.mkdir(outDir)
-        print('The output folder is created:\n\t' + outDir + '\n')
-
-    return outDir
-
-def _MakeSubfolder(inputFileName, outputDir) :
-    # extract input file Id and create folder for the results
-    inputId = os.path.basename(inputFileName).split('.')[0].split('_')[1]
-    subFolder = outputDir + '\\' + inputId + '_files'
-    os.mkdir(subFolder)
-    print subFolder, ' is created for ', inputId
-
-    BuildHtml.MoveFiles(subFolder, projectDir)  
-
-    return [inputId, subFolder]
+import shutil
 
 def MakeSubfolder(inputFileName, outputDir) :
-    return ["",""]
+    # Read the input file into the rawData variable
+    f = open(inputFileName, 'r')
+    rawData = f.readlines()
+    f.close()
+
+    # create subfolder for the report
+    t = time.localtime()
+    timestamp = str(t[0]) + '-' + str(t[1]) + '-' + str(t[2]) + '_' + str(t[3]) + 'h' + str(t[4]) + 'm' + str(t[5]) + 's'
+    subFolder = outputDir + 'Report_' + timestamp + '\\'
+    os.mkdir(subFolder)
+    print('\nThe output folder is created:\n\t' + subFolder + '\n')
+
+    # move the template files into the subfolder
+    shutil.copy2('Report_template.html', subFolder)
+    shutil.copy2(inputFileName, subFolder + 'InputData'+ '_' + timestamp + '.txt')
+    print('\nTemplate files copied to ' + subFolder + '\n')
+
+    return [subFolder, rawData]

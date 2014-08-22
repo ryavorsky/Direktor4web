@@ -5,8 +5,8 @@ import BuildHtml
 import BuildGraphs
 
 def Main():
-    inputFileName = "c:\\DirekWeb\\upload\\export_912.txt"
-    outputDir = "c:\\DirekWeb\\reports\\"
+    inputFileName = "c:\\Direktor4web\\upload\\export_912.txt"
+    outputDir = "c:\\Direktor4web\\reports\\"
 
     [subFolder, rawData] = CheckFolders.MakeSubfolder(inputFileName, outputDir)
     [graphData, statData] = ParseInput.DataFromFile(rawData, subFolder)
