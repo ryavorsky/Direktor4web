@@ -18,7 +18,6 @@ def MakeSubfolder(inputFileName, outputDir) :
 
     # move the template files into the subfolder
     shutil.copy2('Report_template.html', subFolder)
-    shutil.copy2('key.txt', subFolder)
     shutil.copy2(inputFileName, subFolder + 'InputData'+ '_' + timestamp + '.txt')
     print('\nTemplate files copied to ' + subFolder + '\n')
 
