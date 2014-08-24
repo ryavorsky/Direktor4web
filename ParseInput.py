@@ -143,3 +143,4 @@ def extractAnswers(statData, questionNumbers) :
     print 'Extracted answers for', questionNumbers, ':\n', res
     return res
 
+
