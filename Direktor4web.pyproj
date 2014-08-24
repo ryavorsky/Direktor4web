@@ -24,15 +24,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BuildGraphs.py" />
-    <Compile Include="CheckFolders.py" />
     <Compile Include="Direktor4Web.py" />
     <Compile Include="BuildHtml.py" />
     <Compile Include="ParseInput.py" />
     <Compile Include="StatValues.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="key.txt" />
-    <Content Include="Report_template.html" />
+    <Content Include="templates\key.txt" />
+    <Content Include="templates\Report_template.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="templates\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>
