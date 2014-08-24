@@ -1,12 +1,13 @@
 # Convert the inputraw data into the internal data representation
+import os
 
 def DataFromFile(rawData, subFolder):
     print '\nParsing data. Folder:', subFolder
 
     # Get questions specs from key.txt
     keys = extractKeys(subFolder)
-
-    f_data = open(subFolder + 'data.txt', 'w')
+    dataFileName = os.path.join(subFolder, 'data.txt')
+    f_data = open(dataFileName, 'w')
 
     graphData = []
     statData = []
@@ -91,7 +92,8 @@ def extractKeys(subFolder) :
 
     print '\nExtracting keys'
     res = []    
-    f = open (subFolder + 'key.txt', 'r')
+    fileName = os.path.join(subFolder, 'key.txt')
+    f = open (fileName, 'r')
     line = f.readline() # skip the table header
     for line in f.readlines() :
         res.append( line.split('\t') )

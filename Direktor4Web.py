@@ -34,15 +34,16 @@ def MakeSubfolder(inputFileName, outputDir) :
     # create subfolder for the report
     t = time.localtime()
     timestamp = str(t[0]) + '-' + str(t[1]) + '-' + str(t[2]) + '_' + str(t[3]) + 'h' + str(t[4]) + 'm' + str(t[5]) + 's'
-    subFolder = outputDir + 'Report_' + timestamp + '\\'
+    subFolder = os.path.join(outputDir, 'Report_' + timestamp)
     os.mkdir(subFolder)
     print('\nThe output folder is created:\n\t' + subFolder + '\n')
 
     # move the template files into the subfolder
-    sourceFolder = 'templates\\'
+    sourceFolder = 'templates'
     inputFiles = os.listdir(sourceFolder)
     for fileName in inputFiles:
-        shutil.copy2(sourceFolder + fileName, subFolder)
+        fullFileName = os.path.join(sourceFolder, fileName)
+        shutil.copy2(fullFileName, subFolder)
 
     shutil.copy2(inputFileName, subFolder + 'InputData'+ '_' + timestamp + '.txt')
     print('\nTemplate files copied to ' + subFolder + '\n')
