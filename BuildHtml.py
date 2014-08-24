@@ -1,2 +1,0 @@
-def CreateReport(subFolder):
-    return

@@ -25,9 +25,10 @@
   <ItemGroup>
     <Compile Include="BuildGraphs.py" />
     <Compile Include="Direktor4Web.py" />
-    <Compile Include="BuildHtml.py" />
+    <Compile Include="BuildTexts.py" />
     <Compile Include="ParseInput.py" />
     <Compile Include="StatValues.py" />
+    <Compile Include="StatValues1.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="templates\key.txt" />
