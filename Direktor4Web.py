@@ -7,12 +7,14 @@ import StatValues
 import BuildTexts
 import BuildGraphs
 
-def Main():
-    inputFileName = "c:\\Direktor4web\\upload\\export_912.txt"
-    outputDir = "c:\\Direktor4web\\reports\\"
+inputFileName = "c:\\Direktor4web\\upload\\export_912.txt"
+templateDir = "templates\\"
+outputDir = "c:\\Direktor4web\\reports\\"
+
+def Main(): 
 
     print 'Make subfolders. '
-    [subFolder, rawData] = MakeSubfolder(inputFileName, outputDir)
+    [subFolder, rawData] = MakeSubfolder()
   
     print 'Parse input. '
     [graphData, statData] = ParseInput.DataFromFile(rawData, subFolder)
@@ -25,7 +27,8 @@ def Main():
     BuildTexts.CreateReport(subFolder)
 
 
-def MakeSubfolder(inputFileName, outputDir) :
+def MakeSubfolder() :
+  
     # Read the input file into the rawData variable
     f = open(inputFileName, 'r')
     rawData = f.readlines()
@@ -39,10 +42,10 @@ def MakeSubfolder(inputFileName, outputDir) :
     print('\nThe output folder is created:\n\t' + subFolder + '\n')
 
     # move the template files into the subfolder
-    sourceFolder = 'templates'
-    inputFiles = os.listdir(sourceFolder)
+    inputFiles = os.listdir(templateDir)
+    print str(inputFiles)
     for fileName in inputFiles:
-        fullFileName = os.path.join(sourceFolder, fileName)
+        fullFileName = os.path.join(templateDir, fileName)
         shutil.copy2(fullFileName, subFolder)
 
     shutil.copy2(inputFileName, subFolder + 'InputData'+ '_' + timestamp + '.txt')
