@@ -4,7 +4,7 @@ import shutil
 
 import ParseInput
 import StatValues
-import BuildHtml
+import BuildTexts
 import BuildGraphs
 
 def Main():
@@ -22,7 +22,7 @@ def Main():
     BuildGraphs.BuildAllGraphs(subFolder, graphData)
 
     print 'Create the final report. '
-    BuildHtml.CreateReport(subFolder)
+    BuildTexts.CreateReport(subFolder)
 
 
 def MakeSubfolder(inputFileName, outputDir) :

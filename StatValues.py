@@ -3,7 +3,7 @@ import math
 import time
 
 import StatValues1
-#import StatValues2
+import StatValues2
 #import StatValues3
 #import StatValues4
 #import StatValues5
@@ -12,10 +12,8 @@ def ComputeValues(subFolder, statData) :
 
     print '\nCompute the statistics values and build the charts'
 
-    os.chdir(subFolder)
-
     StatValues1.ComputeAll(subFolder, statData)
-    #StatValues2.ComputeAll(subFolder, statData)
+    StatValues2.ComputeAll(subFolder, statData)
     #StatValues3.ComputeAll(subFolder, statData)
     #StatValues4.ComputeAll(subFolder, statData)
     #StatValues5.ComputeAll(subFolder, statData)
