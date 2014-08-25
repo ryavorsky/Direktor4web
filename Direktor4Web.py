@@ -10,6 +10,7 @@ import BuildGraphs
 inputFileName = "c:\\Direktor4web\\upload\\export_912.txt"
 templateDir = "templates\\"
 outputDir = "c:\\Direktor4web\\reports\\"
+mysubfolder = ""
 
 def Main(): 
 
@@ -48,7 +49,7 @@ def MakeSubfolder() :
         fullFileName = os.path.join(templateDir, fileName)
         shutil.copy2(fullFileName, subFolder)
 
-    shutil.copy2(inputFileName, subFolder + 'InputData'+ '_' + timestamp + '.txt')
+    shutil.copy2(inputFileName, os.path.join(subFolder, 'InputData'+ '_' + timestamp + '.txt'))
     print('\nTemplate files copied to ' + subFolder + '\n')
 
     return [subFolder, rawData]

@@ -38,7 +38,7 @@ def compute21a(subFolder, statData): # aggregate
     BuildTexts.addMacro(subFolder, 'valBAAyesNumP', str(yesNumP))
     BuildTexts.addMacro(subFolder, 'valBAAnoNumP', str(noNumP))
 
-    BuildCharts.YesNoPie(subFolder + '\\pie211.png', yesNumP, noNumP)
+    BuildCharts.YesNoPie(subFolder, 'pie211.png', yesNumP, noNumP)
 
 
 def compute21b(subFolder, statData): # by age - q14
@@ -52,10 +52,10 @@ def compute21b(subFolder, statData): # by age - q14
     BuildTexts.addMacrosList(subFolder, 'valBAByesNum', yesNum)
     BuildTexts.addMacrosList(subFolder, 'valBABnoNum', noNum)
 
-    BuildCharts.YesNoPie(subFolder + '\\pie212a.png', yesNum[0], noNum[0])
-    BuildCharts.YesNoPie(subFolder + '\\pie212b.png', yesNum[1], noNum[1])
-    BuildCharts.YesNoPie(subFolder + '\\pie212c.png', yesNum[2], noNum[2])
-    BuildCharts.YesNoPie(subFolder + '\\pie212d.png', yesNum[3], noNum[3])
+    BuildCharts.YesNoPie(subFolder, 'pie212a.png', yesNum[0], noNum[0])
+    BuildCharts.YesNoPie(subFolder, 'pie212b.png', yesNum[1], noNum[1])
+    BuildCharts.YesNoPie(subFolder, 'pie212c.png', yesNum[2], noNum[2])
+    BuildCharts.YesNoPie(subFolder, 'pie212d.png', yesNum[3], noNum[3])
 
 def compute21c(subFolder, statData): # by category - q19
     print '\nComputing values for slide 2.1.3.'
@@ -68,11 +68,11 @@ def compute21c(subFolder, statData): # by category - q19
     BuildTexts.addMacrosList(subFolder, 'valBACyesNum', yesNum)
     BuildTexts.addMacrosList(subFolder, 'valBACnoNum', noNum)
 
-    BuildCharts.YesNoPie(subFolder + '\\pie213a.png', yesNum[0], noNum[0])
-    BuildCharts.YesNoPie(subFolder + '\\pie213b.png', yesNum[1], noNum[1])
-    BuildCharts.YesNoPie(subFolder + '\\pie213c.png', yesNum[2], noNum[2])
-    BuildCharts.YesNoPie(subFolder + '\\pie213d.png', yesNum[3], noNum[3])
-    BuildCharts.YesNoPie(subFolder + '\\pie213e.png', yesNum[4], noNum[4])
+    BuildCharts.YesNoPie(subFolder, 'pie213a.png', yesNum[0], noNum[0])
+    BuildCharts.YesNoPie(subFolder, 'pie213b.png', yesNum[1], noNum[1])
+    BuildCharts.YesNoPie(subFolder, 'pie213c.png', yesNum[2], noNum[2])
+    BuildCharts.YesNoPie(subFolder, 'pie213d.png', yesNum[3], noNum[3])
+    BuildCharts.YesNoPie(subFolder, 'pie213e.png', yesNum[4], noNum[4])
 
 def compute21d(subFolder, statData): # by question
     print '\nComputing values for slide 2.1.4.'
@@ -85,11 +85,11 @@ def compute21d(subFolder, statData): # by question
     BuildTexts.addMacrosList(subFolder, 'valBADyesNum', yesNum)
     BuildTexts.addMacrosList(subFolder, 'valBADnoNum', noNum)
 
-    BuildCharts.YesNoPie(subFolder + '\\pie214a.png', yesNum[0], noNum[0])
-    BuildCharts.YesNoPie(subFolder + '\\pie214b.png', yesNum[1], noNum[1])
-    BuildCharts.YesNoPie(subFolder + '\\pie214c.png', yesNum[2], noNum[2])
-    BuildCharts.YesNoPie(subFolder + '\\pie214d.png', yesNum[3], noNum[3])
-    BuildCharts.YesNoPie(subFolder + '\\pie214e.png', yesNum[4], noNum[4])
+    BuildCharts.YesNoPie(subFolder, 'pie214a.png', yesNum[0], noNum[0])
+    BuildCharts.YesNoPie(subFolder, 'pie214b.png', yesNum[1], noNum[1])
+    BuildCharts.YesNoPie(subFolder, 'pie214c.png', yesNum[2], noNum[2])
+    BuildCharts.YesNoPie(subFolder, 'pie214d.png', yesNum[3], noNum[3])
+    BuildCharts.YesNoPie(subFolder, 'pie214e.png', yesNum[4], noNum[4])
 
 def compute22a(subFolder, statData): # aggregate
     print '\nComputing values for slide 2.2.1.'
@@ -105,7 +105,7 @@ def compute22a(subFolder, statData): # aggregate
     BuildTexts.addMacro(subFolder, 'valBBAyesNumP', str(yesNumP))
     BuildTexts.addMacro(subFolder, 'valBBAnoNumP', str(noNumP))
 
-    BuildCharts.YesNoPie(subFolder + '\\pie221.png', yesNumP, noNumP)
+    BuildCharts.YesNoPie(subFolder, 'pie221.png', yesNumP, noNumP)
 
 
 def compute22b(subFolder, statData): # by age
@@ -119,10 +119,10 @@ def compute22b(subFolder, statData): # by age
     BuildTexts.addMacrosList(subFolder, 'valBBByesNum', yesNum)
     BuildTexts.addMacrosList(subFolder, 'valBBBnoNum', noNum)
 
-    BuildCharts.YesNoPie(subFolder + '\\pie222a.png', yesNum[0], noNum[0])
-    BuildCharts.YesNoPie(subFolder + '\\pie222b.png', yesNum[1], noNum[1])
-    BuildCharts.YesNoPie(subFolder + '\\pie222c.png', yesNum[2], noNum[2])
-    BuildCharts.YesNoPie(subFolder + '\\pie222d.png', yesNum[3], noNum[3])
+    BuildCharts.YesNoPie(subFolder, 'pie222a.png', yesNum[0], noNum[0])
+    BuildCharts.YesNoPie(subFolder, 'pie222b.png', yesNum[1], noNum[1])
+    BuildCharts.YesNoPie(subFolder, 'pie222c.png', yesNum[2], noNum[2])
+    BuildCharts.YesNoPie(subFolder, 'pie222d.png', yesNum[3], noNum[3])
 
 
 def compute22c(subFolder, statData): # by category - q19
@@ -136,11 +136,11 @@ def compute22c(subFolder, statData): # by category - q19
     BuildTexts.addMacrosList(subFolder, 'valBBCyesNum', yesNum)
     BuildTexts.addMacrosList(subFolder, 'valBBCnoNum', noNum)
 
-    BuildCharts.YesNoPie(subFolder + '\\pie223a.png', yesNum[0], noNum[0])
-    BuildCharts.YesNoPie(subFolder + '\\pie223b.png', yesNum[1], noNum[1])
-    BuildCharts.YesNoPie(subFolder + '\\pie223c.png', yesNum[2], noNum[2])
-    BuildCharts.YesNoPie(subFolder + '\\pie223d.png', yesNum[3], noNum[3])
-    BuildCharts.YesNoPie(subFolder + '\\pie223e.png', yesNum[4], noNum[4])
+    BuildCharts.YesNoPie(subFolder, 'pie223a.png', yesNum[0], noNum[0])
+    BuildCharts.YesNoPie(subFolder, 'pie223b.png', yesNum[1], noNum[1])
+    BuildCharts.YesNoPie(subFolder, 'pie223c.png', yesNum[2], noNum[2])
+    BuildCharts.YesNoPie(subFolder, 'pie223d.png', yesNum[3], noNum[3])
+    BuildCharts.YesNoPie(subFolder, 'pie223e.png', yesNum[4], noNum[4])
 
 
 def compute22d(subFolder, statData): # by question
@@ -154,10 +154,10 @@ def compute22d(subFolder, statData): # by question
     BuildTexts.addMacrosList(subFolder, 'valBBDyesNum', yesNum)
     BuildTexts.addMacrosList(subFolder, 'valBBDnoNum', noNum)
 
-    BuildCharts.YesNoPie(subFolder + '\\pie224a.png', yesNum[0], noNum[0])
-    BuildCharts.YesNoPie(subFolder + '\\pie224b.png', yesNum[1], noNum[1])
-    BuildCharts.YesNoPie(subFolder + '\\pie224c.png', yesNum[2], noNum[2])
-    BuildCharts.YesNoPie(subFolder + '\\pie224d.png', yesNum[3], noNum[3])
+    BuildCharts.YesNoPie(subFolder, 'pie224a.png', yesNum[0], noNum[0])
+    BuildCharts.YesNoPie(subFolder, 'pie224b.png', yesNum[1], noNum[1])
+    BuildCharts.YesNoPie(subFolder, 'pie224c.png', yesNum[2], noNum[2])
+    BuildCharts.YesNoPie(subFolder, 'pie224d.png', yesNum[3], noNum[3])
 
 
 def compute22e(subFolder, statData): # aggregate (1 question)
@@ -179,7 +179,7 @@ def compute22e(subFolder, statData): # aggregate (1 question)
     BuildTexts.addMacro(subFolder, 'valBBEansCp', str(ansCp))
     BuildTexts.addMacro(subFolder, 'valBBEansDp', str(ansDp))
     
-    BuildCharts.Pie(subFolder + '\\pie225.png', [ansAp, ansBp, ansCp, ansDp])
+    BuildCharts.Pie(subFolder, 'pie225.png', [ansAp, ansBp, ansCp, ansDp])
 
 
 def compute23a(subFolder, statData): # aggregate
@@ -195,7 +195,7 @@ def compute23a(subFolder, statData): # aggregate
     BuildTexts.addMacro(subFolder, 'valBCAyesNumP', str(yesNumP))
     BuildTexts.addMacro(subFolder, 'valBCAnoNumP', str(noNumP))
 
-    BuildCharts.YesNoPie(subFolder + '\\pie231.png', yesNumP, noNumP)
+    BuildCharts.YesNoPie(subFolder, 'pie231.png', yesNumP, noNumP)
 
 
 def compute23b(subFolder, statData): # aggregate
@@ -211,7 +211,7 @@ def compute23b(subFolder, statData): # aggregate
     BuildTexts.addMacro(subFolder, 'valBCByesNumP', str(yesNumP))
     BuildTexts.addMacro(subFolder, 'valBCBnoNumP', str(noNumP))
 
-    BuildCharts.YesNoPie(subFolder + '\\pie232.png', yesNumP, noNumP)
+    BuildCharts.YesNoPie(subFolder, 'pie232.png', yesNumP, noNumP)
 
 
 def compute23c(subFolder, statData): # aggregate (1 question)
@@ -230,7 +230,7 @@ def compute23c(subFolder, statData): # aggregate (1 question)
     BuildTexts.addMacro(subFolder, 'valBCCansBp', str(ansBp))
     BuildTexts.addMacro(subFolder, 'valBCCansCp', str(ansCp))
     
-    BuildCharts.Pie(subFolder + '\\pie233.png', [ansAp, ansBp, ansCp])
+    BuildCharts.Pie(subFolder, 'pie233.png', [ansAp, ansBp, ansCp])
 
 
 def compute23d(subFolder, statData): # aggregate
@@ -246,6 +246,6 @@ def compute23d(subFolder, statData): # aggregate
     BuildTexts.addMacro(subFolder, 'valBCDyesNumP', str(yesNumP))
     BuildTexts.addMacro(subFolder, 'valBCDnoNumP', str(noNumP))
 
-    BuildCharts.YesNoPie(subFolder + '\\pie234.png', yesNumP, noNumP)
+    BuildCharts.YesNoPie(subFolder, 'pie234.png', yesNumP, noNumP)
 
 
