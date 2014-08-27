@@ -33,8 +33,6 @@ def compute21a(subFolder, statData): # aggregate
     noNum = values.count('89') + values.count('90')
     [yesNumP, noNumP] = StatValues.percent([yesNum,noNum])
 
-    BuildTexts.addMacro(subFolder, 'valBAAyesNum', str(yesNum))
-    BuildTexts.addMacro(subFolder, 'valBAAnoNum', str(noNum))
     BuildTexts.addMacro(subFolder, 'valBAAyesNumP', str(yesNumP))
     BuildTexts.addMacro(subFolder, 'valBAAnoNumP', str(noNumP))
 
@@ -100,8 +98,6 @@ def compute22a(subFolder, statData): # aggregate
     noNum = values.count('85') + values.count('86')
     [yesNumP, noNumP] = StatValues.percent([yesNum,noNum])
 
-    BuildTexts.addMacro(subFolder, 'valBBAyesNum', str(yesNum))
-    BuildTexts.addMacro(subFolder, 'valBBAnoNum', str(noNum))
     BuildTexts.addMacro(subFolder, 'valBBAyesNumP', str(yesNumP))
     BuildTexts.addMacro(subFolder, 'valBBAnoNumP', str(noNumP))
 
@@ -192,8 +188,8 @@ def compute23a(subFolder, statData): # aggregate
 
     BuildTexts.addMacro(subFolder, 'valBCAyesNum', str(yesNum))
     BuildTexts.addMacro(subFolder, 'valBCAnoNum', str(noNum))
-    BuildTexts.addMacro(subFolder, 'valBCAyesNumP', str(yesNumP))
-    BuildTexts.addMacro(subFolder, 'valBCAnoNumP', str(noNumP))
+    BuildTexts.addMacro(subFolder, 'valBCAyesNP', str(yesNumP))
+    BuildTexts.addMacro(subFolder, 'valBCAnoNP', str(noNumP))
 
     BuildCharts.YesNoPie(subFolder, 'pie231.png', yesNumP, noNumP)
 
@@ -208,8 +204,8 @@ def compute23b(subFolder, statData): # aggregate
 
     BuildTexts.addMacro(subFolder, 'valBCByesNum', str(yesNum))
     BuildTexts.addMacro(subFolder, 'valBCBnoNum', str(noNum))
-    BuildTexts.addMacro(subFolder, 'valBCByesNumP', str(yesNumP))
-    BuildTexts.addMacro(subFolder, 'valBCBnoNumP', str(noNumP))
+    BuildTexts.addMacro(subFolder, 'valBCByesNP', str(yesNumP))
+    BuildTexts.addMacro(subFolder, 'valBCBnoNP', str(noNumP))
 
     BuildCharts.YesNoPie(subFolder, 'pie232.png', yesNumP, noNumP)
 
@@ -226,9 +222,9 @@ def compute23c(subFolder, statData): # aggregate (1 question)
     BuildTexts.addMacro(subFolder, 'valBCCansA', str(ansA))
     BuildTexts.addMacro(subFolder, 'valBCCansB', str(ansB))
     BuildTexts.addMacro(subFolder, 'valBCCansC', str(ansC))
-    BuildTexts.addMacro(subFolder, 'valBCCansAp', str(ansAp))
-    BuildTexts.addMacro(subFolder, 'valBCCansBp', str(ansBp))
-    BuildTexts.addMacro(subFolder, 'valBCCansCp', str(ansCp))
+    BuildTexts.addMacro(subFolder, 'valBCCanAp', str(ansAp))
+    BuildTexts.addMacro(subFolder, 'valBCCanBp', str(ansBp))
+    BuildTexts.addMacro(subFolder, 'valBCCanCp', str(ansCp))
     
     BuildCharts.Pie(subFolder, 'pie233.png', [ansAp, ansBp, ansCp])
 
@@ -243,8 +239,8 @@ def compute23d(subFolder, statData): # aggregate
 
     BuildTexts.addMacro(subFolder, 'valBCDyesNum', str(yesNum))
     BuildTexts.addMacro(subFolder, 'valBCDnoNum', str(noNum))
-    BuildTexts.addMacro(subFolder, 'valBCDyesNumP', str(yesNumP))
-    BuildTexts.addMacro(subFolder, 'valBCDnoNumP', str(noNumP))
+    BuildTexts.addMacro(subFolder, 'valBCDyesNP', str(yesNumP))
+    BuildTexts.addMacro(subFolder, 'valBCDnoNP', str(noNumP))
 
     BuildCharts.YesNoPie(subFolder, 'pie234.png', yesNumP, noNumP)
 

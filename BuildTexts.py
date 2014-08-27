@@ -1,9 +1,36 @@
 import os
 
 def CreateReport(subFolder):
-    # BuildTex.MakeTitlePage(subFolder, statData)
-    # BuildTex.buildNamesList(subFolder, statData)
+    # MakeTitlePage(subFolder, statData)
+    # buildNamesList(subFolder, statData)
+
+    applyMacros(subFolder)
     return
+
+def applyMacros(subFolder):
+    macrosFileName = os.path.join(subFolder,'commands.tex')
+    templateFileName = os.path.join(subFolder,'Report_template.html')
+
+    # Extract macros
+    macros = dict()
+    macrosFile = open(macrosFileName,'r')
+    for line in macrosFile.readlines() :
+        size = len(line)
+        [var, value] = line[12:size-2].split('}{')
+        macros[var] = value
+    print '\n Macros:', macros
+    macrosFile.close()
+
+    # Substitute the macros into the report template
+    htmlReport = open(templateFileName,'r')
+    report = '\n'.join(htmlReport.readlines())
+    for var in macros :
+        print var, macros[var]
+        report = report.replace(var, macros[var])
+    htmlReport.close()
+    htmlReport = open(templateFileName,'w')
+    htmlReport.write(report)
+    htmlReport.close()
 
 
 # append a TeX macro definition to the commands.tex file
