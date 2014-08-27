@@ -1,7 +1,17 @@
-from pylab import *
-import matplotlib
+#from pylab import *
+#import matplotlib
 import shutil
 import os
+
+def YesNoPie(subFolder, fileName, yesNum = 11, noNum = 5) :
+    shutil.copy2(os.path.join(subFolder,'diag.png'), os.path.join(subFolder,fileName))
+    return
+
+def Pie(subFolder, fileName, data):
+    shutil.copy2(os.path.join(subFolder,'diag.png'), os.path.join(subFolder,fileName))
+    return
+
+'''
 
 def YesNoPie(subFolder, fileName, yesNum = 11, noNum = 5) :
 
@@ -57,3 +67,4 @@ def Pie(subFolder, fileName, data):
         savefig(os.path.join(subFolder,fileName))
     close(1)
 
+'''
