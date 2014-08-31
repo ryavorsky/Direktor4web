@@ -4,9 +4,9 @@ import time
 
 import StatValues1
 import StatValues2
-#import StatValues3
-#import StatValues4
-#import StatValues5
+import StatValues3
+import StatValues4
+import StatValues5
 
 def ComputeValues(subFolder, statData) :
 
@@ -14,9 +14,9 @@ def ComputeValues(subFolder, statData) :
 
     StatValues1.ComputeAll(subFolder, statData)
     StatValues2.ComputeAll(subFolder, statData)
-    #StatValues3.ComputeAll(subFolder, statData)
-    #StatValues4.ComputeAll(subFolder, statData)
-    #StatValues5.ComputeAll(subFolder, statData)
+    StatValues3.ComputeAll(subFolder, statData)
+    StatValues4.ComputeAll(subFolder, statData)
+    StatValues5.ComputeAll(subFolder, statData)
 
 
 # join list of lists into one big list

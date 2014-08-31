@@ -31,6 +31,9 @@
     <Compile Include="StatValues.py" />
     <Compile Include="StatValues1.py" />
     <Compile Include="StatValues2.py" />
+    <Compile Include="StatValues3.py" />
+    <Compile Include="StatValues4.py" />
+    <Compile Include="StatValues5.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="InstallModules.txt" />
