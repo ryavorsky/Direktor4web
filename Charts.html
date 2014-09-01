@@ -1,0 +1,101 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Charts</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript" src="raphael-min.js"></script>
+    <script type="text/javascript">
+
+    function piechart(pieData, divName){
+
+        var paper;
+        var arc;
+        var colorArr = ["#468966","#FFF0A5","#FFB03B","#B64926","#8E2800"];
+        var sectorAngleArr = [];
+        var total = 0;
+        var startAngle = 0;
+        var endAngle = 0;
+        var x1,x2,y1,y2 = 0;
+
+        paper = Raphael(divName);
+
+        //CALCULATE THE TOTAL
+        for(var k=0; k < pieData.length; k++){
+            total += pieData[k];
+        }
+
+        //CALCULATE THE ANGLES THAT EACH SECTOR SWIPES AND STORE IN AN ARRAY
+        for(var i=0; i < pieData.length; i++){
+            var angle = Math.ceil(360.0 * pieData[i]/total);
+            sectorAngleArr.push(angle);
+        }
+
+        // draw()
+        for(var i=0; i < sectorAngleArr.length; i++){
+            startAngle = endAngle;
+            endAngle = startAngle + sectorAngleArr[i];
+
+            x1 = parseInt(200 + 180.0*Math.cos(Math.PI*startAngle/180.0));
+            y1 = parseInt(200 + 180.0*Math.sin(Math.PI*startAngle/180.0));
+
+            x2 = parseInt(200 + 180.0*Math.cos(Math.PI*endAngle/180.0));
+            y2 = parseInt(200 + 180.0*Math.sin(Math.PI*endAngle/180.0));
+
+            if (sectorAngleArr[i] > 180) {flag = 1} else {flag = 0};
+
+            var d = "M200,200  L" + x1 + "," + y1 + "  A180,180 0 " + flag + ",1 " + x2 + "," + y2 + " z"; //1 means clockwise
+            // alert(d);
+            arc = paper.path(d);
+            arc.attr("fill",colorArr[i]);
+            };
+        };
+
+    function yesnopie(yes, no, divName){
+        var paper;
+        var arc;
+        var colorArr = ["#FF0000","#00FF00"];
+        var total = yes + no;
+        var startAngle = 0;
+        var endAngle = Math.ceil(360.0 * yes/total);
+        if (endAngle == 0){endAngle = 1}
+        var x1,x2,y1,y2 = 0;
+
+        paper = Raphael(divName);
+
+        x1 = parseInt(200 + 180);
+        y1 = parseInt(200 );
+
+        x2 = parseInt(200 + 180.0*Math.cos(Math.PI*endAngle/180.0));
+        y2 = parseInt(200 + 180.0*Math.sin(Math.PI*endAngle/180.0));
+
+        if (endAngle > 180) {flag0 = 1; flag1 = 0} else {flag0 = 0; flag1 = 1};
+
+        var d0 = "M200,200  L" + x1 + "," + y1 + "  A180,180 0 " + flag0 + ",1 " + x2 + "," + y2 + " z"; //1 means clockwise
+        var d1 = "M200,200  L" + x2 + "," + y2 + "  A180,180 0 " + flag1 + ",1 " + x1 + "," + y1 + " z"; //1 means clockwise
+
+        arc = paper.path(d0);
+        arc.attr("fill",colorArr[0]);
+        arc = paper.path(d1);
+        arc.attr("fill",colorArr[1]);
+
+    }
+
+    </script>
+</head>
+
+<body onload="piechart([70,10,1], 'holder'); yesnopie(0,100,'holder2')">
+    <h3>
+        Charts
+    </h3>
+
+    <!-- div id="holder" style="width:600px; height:400px;" /> -->
+    <svg height="400" version="1.1" width="600" xmlns="http://www.w3.org/2000/svg"
+         style="overflow: hidden; position: relative; top: 0.28125px;" zoomAndPan="magnify">
+        <path fill="#468966" stroke="#000000" d="M200,200L380,200A180,180,0,1,1,320,66Z"></path>
+        <path fill="#fff0a5" stroke="#000000" d="M200,200L320,66A180,180,0,0,1,380,190Z"></path>
+        <path fill="#ffb03b" stroke="#000000" d="M200,200L380,190A180,180,0,0,1,380,200Z"></path>
+    </svg>
+    End
+
+</body>
+</html>

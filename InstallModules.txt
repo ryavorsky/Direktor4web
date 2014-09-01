@@ -1,3 +1,28 @@
+Для того, чтобы интерпретатор Python (в данном случае мы описываем интерпретатор 
+версии 2.5), вызванный из консоли, "видел" установленные локально библиотеки, 
+добавьте в файл .profile (в папке $HOME) следующие строки:
+PYTHONPATH=$HOME/lib/python2.5/site-packages
+export PYTHONPATH
+Это следует сделать ДО установки модулей, во избежании накладок при установке. 
+Не забудьте "перелогиниться" после добавления, чтобы настройки применились.
+
+Обычно ключи и предпочтительный способ установки описаны в файлах README и INSTALL 
+внутри дистрибутива модуля. Обычно, это команда:
+python setup.py install --prefix=$HOME
+
+Проблемы могут возникнуть, если разработчики модуля проигнорировали ключ --prefix.
+Установка с помощью easy_install
+easy_install сам умеет искать пакеты в хранилище http://pypi.python.org/pypi, 
+скачивать и устанавливать их. Или же устанавливать уже скачанные.
+
+
+Alternatively, Setuptools may be installed to a user-local path:
+wget https://bootstrap.pypa.io/ez_setup.py -O - | python - --user
+
+python setup.py install --prefix=/opt/setuptools
+
+=====================================================================
+
 ==.pydistutils.cfg==
 [install]
 prefix = $HOME/local

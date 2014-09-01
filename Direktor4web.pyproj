@@ -36,6 +36,7 @@
     <Compile Include="StatValues5.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Charts.html" />
     <Content Include="InstallModules.txt" />
     <Content Include="templates\key.txt" />
     <Content Include="templates\Report_template.html" />

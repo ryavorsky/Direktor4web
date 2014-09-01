@@ -26,7 +26,7 @@ def compute51(subFolder, statData) :  # aggregate
     BuildTexts.addMacro(subFolder, 'valGAyesNP', str(yesNumP))
     BuildTexts.addMacro(subFolder, 'valGAnoNP', str(noNumP))
 
-    BuildCharts.YesNoPie(subFolder,'pie51.png', yesNumP, noNumP)
+    BuildCharts.YesNoPieSVG(subFolder,'pie51.svg', yesNumP, noNumP)
 
 
 def compute52(subFolder, statData): # by age - q14
@@ -46,10 +46,10 @@ def compute52(subFolder, statData): # by age - q14
     BuildTexts.addMacro(subFolder, 'valGBnoNumC', str(noNum[2]))
     BuildTexts.addMacro(subFolder, 'valGBnoNumD', str(noNum[3]))
 
-    BuildCharts.YesNoPie(subFolder,'pie52a.png', yesNum[0], noNum[0])
-    BuildCharts.YesNoPie(subFolder,'pie52b.png', yesNum[1], noNum[1])
-    BuildCharts.YesNoPie(subFolder,'pie52c.png', yesNum[2], noNum[2])
-    BuildCharts.YesNoPie(subFolder,'pie52d.png', yesNum[3], noNum[3])
+    BuildCharts.YesNoPieSVG(subFolder,'pie52a.svg', yesNum[0], noNum[0])
+    BuildCharts.YesNoPieSVG(subFolder,'pie52b.svg', yesNum[1], noNum[1])
+    BuildCharts.YesNoPieSVG(subFolder,'pie52c.svg', yesNum[2], noNum[2])
+    BuildCharts.YesNoPieSVG(subFolder,'pie52d.svg', yesNum[3], noNum[3])
 
 
 def compute53(subFolder, statData): # by category - q19
@@ -71,11 +71,11 @@ def compute53(subFolder, statData): # by category - q19
     BuildTexts.addMacro(subFolder, 'valGCnoNumD', str(noNum[3]))
     BuildTexts.addMacro(subFolder, 'valGCnoNumE', str(noNum[4]))
 
-    BuildCharts.YesNoPie(subFolder,'pie53a.png', yesNum[0], noNum[0])
-    BuildCharts.YesNoPie(subFolder,'pie53b.png', yesNum[1], noNum[1])
-    BuildCharts.YesNoPie(subFolder,'pie53c.png', yesNum[2], noNum[2])
-    BuildCharts.YesNoPie(subFolder,'pie53d.png', yesNum[3], noNum[3])
-    BuildCharts.YesNoPie(subFolder,'pie53e.png', yesNum[4], noNum[4])
+    BuildCharts.YesNoPieSVG(subFolder,'pie53a.svg', yesNum[0], noNum[0])
+    BuildCharts.YesNoPieSVG(subFolder,'pie53b.svg', yesNum[1], noNum[1])
+    BuildCharts.YesNoPieSVG(subFolder,'pie53c.svg', yesNum[2], noNum[2])
+    BuildCharts.YesNoPieSVG(subFolder,'pie53d.svg', yesNum[3], noNum[3])
+    BuildCharts.YesNoPieSVG(subFolder,'pie53e.svg', yesNum[4], noNum[4])
 
 
 def compute54(subFolder, statData): # by question
@@ -91,5 +91,5 @@ def compute54(subFolder, statData): # by question
     BuildTexts.addMacro(subFolder, 'valGDnoNumA', str(noNum[0]))
     BuildTexts.addMacro(subFolder, 'valGDnoNumB', str(noNum[1]))
 
-    BuildCharts.YesNoPie(subFolder,'pie54a.png', yesNum[0], noNum[0])
-    BuildCharts.YesNoPie(subFolder,'pie54b.png', yesNum[1], noNum[1])
+    BuildCharts.YesNoPieSVG(subFolder,'pie54a.svg', yesNum[0], noNum[0])
+    BuildCharts.YesNoPieSVG(subFolder,'pie54b.svg', yesNum[1], noNum[1])

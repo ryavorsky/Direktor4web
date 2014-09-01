@@ -31,7 +31,7 @@ def compute41(subFolder, statData): # one question
     BuildTexts.addMacro(subFolder, 'valDAansCp', str(ansCp))
     BuildTexts.addMacro(subFolder, 'valDAansDp', str(ansDp))
     
-    BuildCharts.Pie(subFolder,'pie41.png', [ansAp, ansBp, ansCp, ansDp])
+    BuildCharts.Pie(subFolder,'pie41.svg', [ansAp, ansBp, ansCp, ansDp])
 
 
 def compute42a(subFolder, statData): # one question 
@@ -52,7 +52,7 @@ def compute42a(subFolder, statData): # one question
     BuildTexts.addMacro(subFolder, 'valDBAansCp', str(ansCp))
     BuildTexts.addMacro(subFolder, 'valDBAansDp', str(ansDp))
     
-    BuildCharts.Pie(subFolder,'pie421.png', [ansAp, ansBp, ansCp, ansDp])
+    BuildCharts.Pie(subFolder,'pie421.svg', [ansAp, ansBp, ansCp, ansDp])
 
 
 def compute42b(subFolder, statData): # one question 
@@ -76,7 +76,7 @@ def compute42b(subFolder, statData): # one question
     BuildTexts.addMacro(subFolder, 'valDBBansDp', str(ansDp))
     BuildTexts.addMacro(subFolder, 'valDBBansEp', str(ansEp))
     
-    BuildCharts.Pie(subFolder,'pie422.png', [ansAp, ansBp, ansCp, ansDp, ansEp])
+    BuildCharts.Pie(subFolder,'pie422.svg', [ansAp, ansBp, ansCp, ansDp, ansEp])
 
 
 def compute42c(subFolder, statData): # one question 
@@ -92,5 +92,5 @@ def compute42c(subFolder, statData): # one question
     BuildTexts.addMacro(subFolder, 'valDBCyesNP', str(yesNumP))
     BuildTexts.addMacro(subFolder, 'valDBCnoNP', str(noNumP))
 
-    BuildCharts.YesNoPie(subFolder,'pie423.png', yesNumP, noNumP)
+    BuildCharts.YesNoPieSVG(subFolder,'pie423.svg', yesNumP, noNumP)
 

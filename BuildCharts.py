@@ -2,69 +2,62 @@
 #import matplotlib
 import shutil
 import os
+import math
 
 def YesNoPie(subFolder, fileName, yesNum = 11, noNum = 5) :
     shutil.copy2(os.path.join(subFolder,'diag.png'), os.path.join(subFolder,fileName))
     return
 
 def Pie(subFolder, fileName, data):
-    shutil.copy2(os.path.join(subFolder,'diag.png'), os.path.join(subFolder,fileName))
+    shutil.copy2(os.path.join(subFolder,'empty.svg'), os.path.join(subFolder,fileName))
     return
 
-'''
 
-def YesNoPie(subFolder, fileName, yesNum = 11, noNum = 5) :
 
-    print '\nBuilding Yes/No pie:', yesNum, noNum, fileName
+def YesNoPieSVG(subFolder = 'c:\\tmp\\', fileName = 'pie1.svg', yesNum = 27, noNum = 5, size = 400) :
 
+    print '\nBuilding Yes/No pie:', yesNum, noNum, size
     if (yesNum == 0) and (noNum == 0) :
-        shutil.copy2(os.path.join(subFolder,'empty.png'), os.path.join(subFolder,fileName))
+        shutil.copy2(os.path.join(subFolder,'empty.svg'), os.path.join(subFolder,fileName))
+    elif (yesNum == 0) :
+        shutil.copy2(os.path.join(subFolder,'pie_no.svg'), os.path.join(subFolder,fileName))
+    elif (noNum == 0) :
+        shutil.copy2(os.path.join(subFolder,'pie_yes.svg'), os.path.join(subFolder,fileName))
     else :
+        cx = int(size/2.0)
+        cy = int(size/2.0)
+        r = int(size/2.0) - 5
 
-        matplotlib.rcParams['font.size'] = 32.0
-        matplotlib.rcParams['font.family'] = 'Times New Roman'
-        fig = figure(1, figsize=(5.5,5.5))
+        x1 = cx + r
+        y1 = cy
 
-        yes = int(yesNum * 100/(yesNum + noNum))
-        fracs = [100 - yes, yes]
-        labels = [str(fracs[0]) + '%',str(fracs[1]) + '%']
+        angle = 2.0 * math.pi * noNum/(yesNum + noNum);
 
-        if fracs[0] == 0 :
-            labels[0] = ''
-        if fracs[1] == 0 :
-            labels[1] = ''
+        x2 = cx + int (r * math.cos(angle))
+        y2 = cy + int (r * math.sin(angle))
 
-        colors=['#FF0000' ,'#9BBB00']
+        if (x1 == x2) and (y1 == y2) :
+            x2 = x1 - 1
 
-        pie(fracs, labels = labels, colors=colors, startangle=90)
-        savefig(os.path.join(subFolder,fileName))
-        close(1)
+        if angle < math.pi :
+            flag0, flag1 = '0', '1'
+        else :
+            flag0, flag1 = '1', '0'
+
+        d0 = "M" + str(cx) + "," + str(cy) + " L" + str(x1) + "," + str(y1) + " A" + str(r) + "," + str(r)+ ",0," + flag0 + ",1," + str(x2) + "," + str(y2) + "Z";
+        d1 = "M" + str(cx) + "," + str(cy) + " L" + str(x2) + "," + str(y2) + " A" + str(r) + "," + str(r)+ ",0," + flag1 + ",1," + str(x1) + "," + str(y1) + "Z";
+
+        res = '<?xml version="1.0" standalone="no"?>\n<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" '
+        res = res + '"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n'
+
+        res = res + '<svg height="' + str(size) + '" width="' + str(size) + '" version="1.1"'
+        res = res + ' xmlns="http://www.w3.org/2000/svg">\n\t<desc>Yes-no pie chart</desc>\n'
+        res = res + '\t<path fill="#FF0000" stroke="#000000" d="' + d0 + '"></path>\n'
+        res = res + '\t<path fill="#00FF00" stroke="#000000" d="' + d1 + '"></path>\n'
+        res = res + '</svg>\n'
+
+        f_out = open(os.path.join(subFolder, fileName), 'w')
+        f_out.write(res)
+        f_out.close()
 
 
-def Pie(subFolder, fileName, data):
-    print '\nBuilding big pie for:', data, fileName
-    matplotlib.rcParams['font.size'] = 32.0
-    matplotlib.rcParams['font.family'] = 'Times New Roman'
-    fig = figure(1, figsize=(5.5,5.5))
-
-    s = 0.0
-    for val in data :
-        s = s + int(val)
-
-    if (int(s) == 0) :
-        shutil.copy2('empty.png', fileName)
-    else :
-        fracs = [int(val*100.0/s) for val in data]
-        print fracs
-        labels = [str(p) + '%' for p in fracs ]
-
-        for i in range(len(fracs)) :
-            if fracs[i] == 0 :
-                labels[i] = ''
-             
-        colors=['#997300','#5B9BD5','#ED7D31','#A5A5A5','#FFC000']
-        pie(fracs, labels = labels, colors=colors, startangle=90)
-        savefig(os.path.join(subFolder,fileName))
-    close(1)
-
-'''

@@ -6,6 +6,7 @@ import ParseInput
 import StatValues
 import BuildTexts
 import BuildGraphs
+import BuildCharts
 
 inputFileName = "c:\\Direktor4web\\upload\\export_912.txt"
 templateDir = "templates\\"
@@ -56,3 +57,4 @@ def MakeSubfolder() :
 
 
 Main()
+#BuildCharts.YesNoPieSVG()
