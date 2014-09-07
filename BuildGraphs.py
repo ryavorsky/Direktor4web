@@ -32,15 +32,24 @@ def BuildSpecGraph(graphData, graph_spec, subFolder, file_name) :
     questions = graph_spec
 
     edges = []
+    dict = {}
 
     for nodeData in graphData:
 
-        [id, localId, name, age, edgeGroups] = nodeData
+        [id, local_id, name, age, edgeGroups] = nodeData
+        dict[id] = local_id
 
+    for nodeData in graphData:
+
+        [id, local_id, name, age, edgeGroups] = nodeData
         for question in questions:
             targets = edgeGroups[question-1]
             for target in targets:
-                edges = edges + [[id, target]]
+                edges = edges + [[local_id, dict.get(target,'0')]]
+
+#    for i in range(len(edges)):
+#        edges[i][0] = dict.get(edges[i][0],'0')
+#        edges[i][1] = dict.get(edges[i][1],'0')
 
     sym_edges = []
     for pair in edges :

@@ -10,6 +10,10 @@ class SocioGraph :
 
     edge = {}
 
+    def __init__(self):
+        self.node = {}
+        self.edge = {}
+
     def nodes(self) :
         return [v for v in self.node]
 
@@ -57,15 +61,27 @@ class SocioGraph :
             return
 
         cx, cy = width/2, width/2
-        r = width/3
+        r = width/2 - 40
 
         i = 0
         for node in self.nodes() :
             angle = 2.0*math.pi*i/N
             node_cx = cx + int (r * math.cos(angle))
             node_cy = cy + int (r * math.sin(angle))
-            node_svg = '<circle cx="'+str(node_cx)+'" cy="'+str(node_cy)+'" r="15" style="stroke:#000000; fill:#AAFFBB"/>'
-            node_svg = node_svg + '\n<text x="'+str(node_cx-4)+'" y="'+str(node_cy+5)+'" fill="black">'+node+'</text>'
+            dx = 0 + len(node) * 5
+            dy = 5
+            fillcolor = '#AAFFBB'
+            degree = self.in_degree(node)
+            size  = 15 + 1.5*degree
+            if size > 30 :
+                size = 30
+            if node == '1' :
+                fillcolor = '#FFFF00'
+            node_svg = '<circle cx="'+str(node_cx)+'" cy="'+str(node_cy)
+            node_svg = node_svg +'" r="'+str(size)+'" style="stroke:#000000; fill:'+fillcolor+'"/>'
+            node_svg = node_svg + '\n<text x="'+str(node_cx-dx)+'" y="'+str(node_cy+dy) + '"'
+            node_svg = node_svg + ' font-family="Verdana"  font-size="14"'
+            node_svg = node_svg + ' fill="black">'+node+'</text>'
             self.update_node_attr(node, 'cx', node_cx)
             self.update_node_attr(node, 'cy', node_cy)
             self.update_node_attr(node, 'svg', node_svg)
