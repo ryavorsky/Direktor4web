@@ -28,6 +28,7 @@
     <Compile Include="Direktor4Web.py" />
     <Compile Include="BuildTexts.py" />
     <Compile Include="ParseInput.py" />
+    <Compile Include="SocioGraph.py" />
     <Compile Include="StatValues.py" />
     <Compile Include="StatValues1.py" />
     <Compile Include="StatValues2.py" />

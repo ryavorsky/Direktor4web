@@ -29,6 +29,7 @@ def Main():
     BuildTexts.CreateReport(subFolder)
 
 
+# Create subfolder for the report files (charts, graphs, lists, texts etc)
 def MakeSubfolder() :
   
     # Read the input file into the rawData variable
@@ -57,4 +58,3 @@ def MakeSubfolder() :
 
 
 Main()
-#BuildCharts.YesNoPieSVG()

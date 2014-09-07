@@ -1,117 +1,57 @@
 import shutil
 import os
 import math
+import SocioGraph
+
+graph_specs = {
+                '61':[4,8, 'directed'], 
+                '62':[4,8, 'pairs'], 
+                '711':[5,7, 'directed'], 
+                '712':[5,7, 'pairs'], 
+                '721':[3,6, 'directed'], 
+                '722':[3,6, 'pairs']
+                }
+
 
 def BuildAllGraphs(subFolder, graphData):
-    shutil.copy2(os.path.join(subFolder,'graph_sample.svg'), os.path.join(subFolder,'graph61.svg'))
-    shutil.copy2(os.path.join(subFolder,'graph_sample.svg'), os.path.join(subFolder,'graph62.svg'))
-    shutil.copy2(os.path.join(subFolder,'graph_sample.svg'), os.path.join(subFolder,'graph711.svg'))
-    shutil.copy2(os.path.join(subFolder,'graph_sample.svg'), os.path.join(subFolder,'graph712.svg'))
-    shutil.copy2(os.path.join(subFolder,'graph_sample.svg'), os.path.join(subFolder,'graph721.svg'))
-    shutil.copy2(os.path.join(subFolder,'graph_sample.svg'), os.path.join(subFolder,'graph722.svg'))
 
-class SocioGraph :
+    # Build specific graphs for the report
+    for graph_id in graph_specs :
+        file_name = os.path.join(subFolder, 'graph' + graph_id + '.svg')
+        BuildSpecGraph(graphData, graph_specs[graph_id], subFolder, file_name)
 
-    node = {}
-
-    edge = {}
-
-    def nodes(self) :
-        return [v for v in self.node]
-
-    def edges(self) :
-        res = []
-        for edge_id in self.edge :
-            res = res+ [[self.edge[edge_id]['source'], self.edge[edge_id]['target']]]
-        return res
-
-    def add_node(self, node_name) :
-        self.node[node_name] = {}
-        self.node[node_name]['id'] = node_name
-
-    def update_node_attr(self, node_name, attr_name, attr_value) :
-        self.node[node_name][attr_name] = attr_value
-
-    def add_edge(self, node1, node2) :
-        id = node1 + '->' + node2
-        self.edge[id] = {}
-        self.edge[id]['source'] = node1
-        self.edge[id]['target'] = node2
-
-    def update_edge_attr(self, node1, node2, attr_name, attr_value) :
-        id = node1 + '->' + node2
-        self.edge[id][attr_name] = attr_value
-
-    def in_degree(self, node_id) :
-        return 1
-
-    def out_degree(self, node_id) :
-        return 1
-
-    def layout(self, mode='circular', width=800 ) :
-
-        N = len(self.nodes()) # number of vertices
-        if N == 0 :
-            return
-
-        cx, cy = width/2, width/2
-        r = width/3
-
-        i = 0
-        for node in self.nodes() :
-            angle = 2.0*math.pi*i/N
-            node_cx = cx + int (r * math.cos(angle))
-            node_cy = cy + int (r * math.sin(angle))
-            node_svg = '<circle cx="'+str(node_cx)+'" cy="'+str(node_cy)+'" r="15" style="stroke:#000000; fill:#AAFFBB"/>'
-            node_svg = node_svg + '\n<text x="'+str(node_cx-4)+'" y="'+str(node_cy+5)+'" fill="black">'+node+'</text>'
-            self.update_node_attr(node, 'cx', node_cx)
-            self.update_node_attr(node, 'cy', node_cy)
-            self.update_node_attr(node, 'svg', node_svg)
-            i = i + 1
-
-        for pair in self.edges() :
-            node1, node2 = pair
-            x1, y1 = self.node[node1]['cx'], self.node[node1]['cy']
-            x2, y2 = self.node[node2]['cx'], self.node[node2]['cy']
-            edge_path = '<path stroke="#000000" d="M'+str(x1)+','+str(y1)+' L'+str(x2)+','+str(y2)+'"></path>'
-            self.update_edge_attr(node1, node2, 'svg', edge_path)
-
-    def make_svg(self, file_name='c:\\Tmp\\Try\\g.svg', size = 800) :
-        f_out = open(file_name, 'w')
-        
-        header = '<?xml version="1.0" standalone="no"?>\n<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" '
-        header = header + '"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n'
-        header = header + '<svg height="' + str(size) + '" width="' + str(size) + '" version="1.1"'
-        header = header + ' xmlns="http://www.w3.org/2000/svg">\n<desc>Socio Graph</desc>\n'
-        f_out.write(header)
-
-        res = ''
-        for edge_id in self.edge :
-            res = res + self.edge[edge_id]['svg'] + '\n'
-        for node_id in self.nodes() :
-            res = res + self.node[node_id]['svg'] + '\n'
-
-        f_out.write(res)
-        f_out.write('</svg>\n')
-        f_out.close()
+    # Add text comments according to the size
+    #BuildTex.addSizeComments(subFolder, len(big_graph.nodes()))
+ 
+    print '\n Building graphs complete'
 
 
+def BuildSpecGraph(graphData, graph_spec, subFolder, file_name) :
 
-def Try():
-    G = SocioGraph()
-    edges = G.edges()
-    nodes = G.nodes()
+    graph_type = graph_spec.pop()
+    questions = graph_spec
 
-    G.add_node('1')
-    G.add_node('2')
-    G.add_node('3')
-    G.add_edge('1','2')
-    G.add_edge('1','3')
+    edges = []
 
-    G.layout()
+    for nodeData in graphData:
 
-    G.make_svg()
+        [id, localId, name, age, edgeGroups] = nodeData
 
-    print 'Ok!\n', 'Nodes :', G.node, '\nEdges :', G.edge
-    print G.nodes()
+        for question in questions:
+            targets = edgeGroups[question-1]
+            for target in targets:
+                edges = edges + [[id, target]]
+
+    sym_edges = []
+    for pair in edges :
+        reverse = [pair[1],pair[0]]
+        if pair[0] < pair[1] and edges.count(reverse) > 0 :
+            sym_edges = sym_edges + [pair]
+
+    if  graph_type == 'pairs' :
+        edges = sym_edges
+
+    G = SocioGraph.MakeGraphFromEdges(edges, file_name)
+
+
 
