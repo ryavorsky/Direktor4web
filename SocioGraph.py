@@ -70,7 +70,7 @@ class SocioGraph :
             node_cy = cy + int (r * math.sin(angle))
             dx = 0 + len(node) * 5
             dy = 5
-            fillcolor = '#AAFFBB'
+            fillcolor = '#CCFFDD'
             degree = self.in_degree(node)
             size  = 15 + 1.5*degree
             if size > 30 :
