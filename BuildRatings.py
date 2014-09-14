@@ -79,7 +79,7 @@ def computeRating(subFolder, sectionId, G) :
 
     resHtml = ''
     for t in res :
-        resLineHtml = '<tr><td>'+t[0]+'</td><td>'+t[1]+'</td><td>'+t[2]+'</td><td>'+str(t[3])+'</td></tr>'
+        resLineHtml = '<tr><td class="right">'+t[0]+'.&nbsp;</td><td>'+t[1]+'</td><td>'+t[2]+'</td><td class="number">'+str(t[3])+'</td></tr>'
         resHtml = resHtml + resLineHtml 
     templateFileName = os.path.join(subFolder,'Report_template.html')
     BuildTexts.replaceInFile(templateFileName,'rating'+sectionId,resHtml)

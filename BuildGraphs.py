@@ -12,7 +12,8 @@ graph_specs = {
                 '711': [5,7, 'directed'], 
                 '712': [5,7, 'pairs'   ], 
                 '721': [3,6, 'directed'], 
-                '722': [3,6, 'pairs'   ]
+                '722': [3,6, 'pairs'   ],
+                '731': [0, 'directed']
                 }
 
 
