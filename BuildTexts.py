@@ -71,3 +71,20 @@ def replaceInFile(fileName, oldValue, newValue):
     f = open(fileName,'w')
     f.write(data)
     f.close()
+
+def encodeNumber(number) :
+    code = {
+            '1' : 'A',
+            '2' : 'B',
+            '3' : 'C',
+            '4' : 'D',
+            '5' : 'E',
+            '6' : 'F',
+            '7' : 'G',
+            '8' : 'H'
+            }
+    res = ''
+    for symbol in str(number) :
+        res = res + code[symbol]
+
+    return res

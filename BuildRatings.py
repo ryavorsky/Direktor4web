@@ -55,17 +55,19 @@ def addSizeComments(subFolder, numOfNodes) :
     BuildTexts.replaceInFile(fileName,res,'\socioSizeComment')
 
 
-def computeRating(subFolder, fileName, G) :
+def computeRating(subFolder, sectionId, G) :
+    fileName = os.path.join(subFolder, 'table'+sectionId+'.tex')
     print '\nBuilding table ', fileName
     names = extractNames(subFolder)
-    f = open(subFolder + '\\' + fileName,'a')
+
+    # TeX version
+    f = open(fileName,'w')
     
     res = []
-    for n in G.nodes() :
-        id = G.node[n]['number']
-        fullName = names[id][0]
-        position = names[id][1]
-        score = G.in_degree(n)
+    for id in G.nodes() :
+        fullName = names.get(id,['',''])[0]
+        position = names.get(id,['',''])[1]
+        score = G.in_degree(id)
         res.append([id,fullName,position,score])
 
     res.sort(cmp = cmp)
@@ -73,8 +75,14 @@ def computeRating(subFolder, fileName, G) :
     for t in res :
         resLine = t[0] + ' & ' + t[1] + ' & ' + t[2] + ' & ' + str(t[3]) + '\\\\ \n'
         f.write(resLine)
-
     f.close()
+
+    resHtml = ''
+    for t in res :
+        resLineHtml = '<tr><td>'+t[0]+'</td><td>'+t[1]+'</td><td>'+t[2]+'</td><td>'+str(t[3])+'</td></tr>'
+        resHtml = resHtml + resLineHtml 
+    templateFileName = os.path.join(subFolder,'Report_template.html')
+    BuildTexts.replaceInFile(templateFileName,'rating'+sectionId,resHtml)
 
 
 def cmp(x, y) : 
