@@ -18,11 +18,11 @@ def Main():
 
     print 'Make subfolders. '
     [subFolder, rawData] = MakeSubfolder()
+
     if rawData == '' :
         print 'No data to process. '
 
     else :
-
         print 'Parse input. '
         [graphData, statData] = ParseInput.DataFromFile(rawData, subFolder)
 

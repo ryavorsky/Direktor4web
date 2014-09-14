@@ -1,11 +1,9 @@
 import os
 
 def CreateReport(subFolder):
-    # MakeTitlePage(subFolder, statData)
-    # buildNamesList(subFolder, statData)
 
     applyMacros(subFolder)
-    return
+
 
 def applyMacros(subFolder):
     macrosFileName = os.path.join(subFolder,'commands.tex')
@@ -16,8 +14,9 @@ def applyMacros(subFolder):
     macrosFile = open(macrosFileName,'r')
     for line in macrosFile.readlines() :
         size = len(line)
-        [var, value] = line[12:size-2].split('}{')
-        macros[var] = value
+        if size > 12 :
+            [var, value] = line[12:size-2].split('}{')
+            macros[var] = value
     print '\n Macros:', macros
     macrosFile.close()
 
@@ -57,3 +56,18 @@ def addMacrosList(subFolder, commandPrefix, values) :
         command = commandPrefix + suffix[i]
         value = values[i]
         addMacro(subFolder, command, value)
+
+
+def replaceInFile(fileName, oldValue, newValue):
+
+    # read the current file into a variable
+    f = open(fileName,'r')
+    data = '\n'.join(f.readlines())
+    f.close()
+
+    data = data.replace(oldValue, newValue)
+
+    # write the new data into the file
+    f = open(fileName,'w')
+    f.write(data)
+    f.close()

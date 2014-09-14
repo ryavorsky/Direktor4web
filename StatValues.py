@@ -7,16 +7,22 @@ import StatValues2
 import StatValues3
 import StatValues4
 import StatValues5
+import BuildRatings
 
 def ComputeValues(subFolder, statData) :
 
     print '\nCompute the statistics values and build the charts'
+
+    BuildRatings.buildNamesListFile(subFolder, statData)
+    BuildRatings.addNamesListToHtml(subFolder)
+    BuildRatings.addSizeComments(subFolder, len(statData))
 
     StatValues1.ComputeAll(subFolder, statData)
     StatValues2.ComputeAll(subFolder, statData)
     StatValues3.ComputeAll(subFolder, statData)
     StatValues4.ComputeAll(subFolder, statData)
     StatValues5.ComputeAll(subFolder, statData)
+
 
 
 # join list of lists into one big list

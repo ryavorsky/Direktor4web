@@ -25,6 +25,7 @@
   <ItemGroup>
     <Compile Include="BuildCharts.py" />
     <Compile Include="BuildGraphs.py" />
+    <Compile Include="BuildRatings.py" />
     <Compile Include="Direktor4Web.py" />
     <Compile Include="BuildTexts.py" />
     <Compile Include="ParseInput.py" />
@@ -39,6 +40,7 @@
   <ItemGroup>
     <Content Include="Charts.html" />
     <Content Include="InstallModules.txt" />
+    <Content Include="templates\commands.tex" />
     <Content Include="templates\key.txt" />
     <Content Include="templates\Report_template.html" />
   </ItemGroup>

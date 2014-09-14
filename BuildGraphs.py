@@ -20,9 +20,6 @@ def BuildAllGraphs(subFolder, graphData):
         file_name = os.path.join(subFolder, 'graph' + graph_id + '.svg')
         BuildSpecGraph(graphData, graph_specs[graph_id], subFolder, file_name)
 
-    # Add text comments according to the size
-    #BuildTex.addSizeComments(subFolder, len(big_graph.nodes()))
- 
     print '\n Building graphs complete'
 
 
@@ -46,10 +43,6 @@ def BuildSpecGraph(graphData, graph_spec, subFolder, file_name) :
             targets = edgeGroups[question-1]
             for target in targets:
                 edges = edges + [[local_id, dict.get(target,'0')]]
-
-#    for i in range(len(edges)):
-#        edges[i][0] = dict.get(edges[i][0],'0')
-#        edges[i][1] = dict.get(edges[i][1],'0')
 
     sym_edges = []
     for pair in edges :
