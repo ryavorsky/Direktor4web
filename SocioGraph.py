@@ -54,6 +54,17 @@ class SocioGraph :
                 res = res + 1
         return res
 
+    def full_degree(self, node_id) :
+        return self.in_degree(node_id) + self.out_degree(node_id)
+
+
+    def has_edge(self, node1, node2) :
+        return (self.edges().count([node1,node2]) > 0 )
+
+    def connected(self, node1, node2) :
+        return self.has_edge(node1, node2) or self.has_edge(node2, node1)
+
+
     def layout(self, mode='circular', width=800 ) :
 
         N = len(self.nodes()) # number of vertices
@@ -64,8 +75,12 @@ class SocioGraph :
         r = width/2 - 40
 
         i = 0
-        for node in self.nodes() :
-            angle = 2.0*math.pi*i/N
+
+        # sort nodes to improve the graph view
+        nodes_sequence = self.sort_nodes()
+
+        for node in nodes_sequence :
+            angle = 2.0*math.pi*i/N - 1
             node_cx = cx + int (r * math.cos(angle))
             node_cy = cy + int (r * math.sin(angle))
             dx = 0 + len(node) * 5
@@ -95,7 +110,42 @@ class SocioGraph :
             self.update_edge_attr(node1, node2, 'svg', edge_path)
 
 
-    def make_svg(self, file_name='c:\\Tmp\\Try\\g.svg', size = 800) :
+    def sort_nodes(self) :
+
+        list = self.nodes()
+        N = len(list)
+        for i in range(0, N-2) :
+
+            best = i + 1
+
+            for j in range(i+2, N) :
+
+                if self.connected(list[i],list[j]) and not self.connected(list[i],list[best]) :
+                    best = j
+
+                if self.connected(list[i],list[j]) and self.connected(list[i],list[best]) :
+                    if self.full_degree(j) == 1:
+                        best = j
+                    elif (self.full_degree(best) > 1) and self.full_degree(list[j]) > self.full_degree(list[best]) :
+                        best = j
+
+                if not self.connected(list[i],list[j]) and not self.connected(list[i],list[best]) :
+                    if  self.full_degree(list[j]) < self.full_degree(list[best]) :
+                        best = j
+
+            if best > i+1:
+                  list[i+1], list[best] = list[best], list[i+1]
+
+        return list
+
+    def max_degree(self, nodes_list):
+        max_node_id = nodes_list[0]
+        for node in nodes_list:
+            if self.full_degree(node) > self.full_degree(max_node_id) :
+                max_node_id = node
+        return max_node_id
+
+    def make_svg(self, file_name='g.svg', size = 800) :
 
         f_out = open(file_name, 'w')
         
@@ -114,6 +164,18 @@ class SocioGraph :
         f_out.write(res)
         f_out.write('</svg>\n')
         f_out.close()
+
+
+    def javascript_code(self):
+        n = max([int(n) for n in self.nodes()])
+        res = str(n) + ":"
+        correct_edges = []
+        for edge in self.edges():
+            if int(edge[0])*int(edge[1]) > 0 :
+                correct_edges.append(edge)
+        edge_codes = [str(edge[0]) + "-" + str(edge[1]) for edge in correct_edges]
+        res = res + ",".join(edge_codes)
+        return res
 
 
 def MakeGraphFromEdges(edges, file_name) :

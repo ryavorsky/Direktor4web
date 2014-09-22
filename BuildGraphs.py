@@ -6,6 +6,8 @@ import SocioGraph
 import BuildRatings
 import BuildTexts
 
+graph_sequence = ['61','62','711','712','721','722','731']
+
 graph_specs = {
                 '61' : [4,8, 'directed'], 
                 '62' : [4,8, 'pairs'   ], 
@@ -19,9 +21,22 @@ graph_specs = {
 
 def BuildAllGraphs(subFolder, graphData):
 
+    all_graphs = []
     # Build specific graphs for the report
-    for graph_id in graph_specs :
-        BuildGraphFromSpec(graphData, graph_id, graph_specs[graph_id], subFolder)
+    for graph_id in graph_sequence :
+        G = BuildGraphFromSpec(graphData, graph_id, graph_specs[graph_id], subFolder)
+        all_graphs.append(G)
+
+    # Add graph descriptions for JavaScript
+    js_codes = [G.javascript_code() for G in all_graphs]
+    js_codes = [js_codes[i] for i in[0,2,4,6]]
+    js_codes = '["' + '",\n"'.join(js_codes) + '"\n]'
+
+    jsFileName = os.path.join(subFolder,'GraphSpecs.js')
+    jsFile = open(jsFileName,'a')
+    jsFile.write('\ngraph_specs = ' + js_codes + ';\n')
+    jsFile.close()
+
 
     print '\n Building graphs complete'
 
@@ -59,14 +74,32 @@ def BuildGraphFromSpec(graphData, graph_id, graph_spec, subFolder) :
 
         edges = sym_edges
 
+    # remove duplicates
+    edges = removeDuplicates(edges)
+
     # build the graph and the visualization
     G = SocioGraph.MakeGraphFromEdges(edges, file_name)
 
     # save the graph statistics
     code = 'val' + BuildTexts.encodeNumber(graph_id) + 'links'
-    BuildTexts.addMacro(subFolder, code, len(edges))
+
+    if graph_type == 'pairs' :
+        links = len(edges) / 2
+    else :
+        links = len(edges)
+
+    BuildTexts.addMacro(subFolder, code, links)
 
     # build the rating table
     if  graph_type == 'directed' :
         BuildRatings.computeRating(subFolder, graph_id, G)
 
+    return G
+
+def removeDuplicates(lst) :
+
+    res = []
+    for e in lst:
+        if res.count(e) == 0 :
+            res.append(e)
+    return res

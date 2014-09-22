@@ -100,7 +100,7 @@ def cmp(x, y) :
 
 def extractNames(subFolder) :
     names = dict()
-    f = open(subFolder + '\\nameslist.tex','r')
+    f = open(os.path.join(subFolder, 'nameslist.tex'),'r')
 
     for line in f.readlines() :
         p1 = line.find('[')
