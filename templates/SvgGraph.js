@@ -1,11 +1,12 @@
-﻿Gr = "4:1-2,2-3,3-1,1-4";
-var step = 0;
+﻿var step = 0;
 var todo = [];
+var keep_moving = [true,true,true,true,true,true];
+
 
 function Start(){
-	BuildSvgGraph(1);
-	BuildSvgGraph(2);
-	BuildSvgGraph(3);
+	for (var i=1; i<7; i++){
+		BuildSvgGraph(i);
+	}
 	Move();
 }
 
@@ -16,11 +17,39 @@ function Move()
 	step++;
 };
 
+function StopMoving(id){
+	keep_moving[id-1] = !keep_moving[id-1];
+	alert(stop_move);
+};
+
+function MouseEvent(e){
+
+	id = e.currentTarget.id[3];
+	svg_graph=todo[id-1];
+
+	if (e.type == "mousedown" || e.type == "touchstart"){
+		svg_graph.g.SetDragged(mouseX(e)-svg_graph.hw, mouseY(e)-svg_graph.hh, 30);
+		};
+	if (e.type == "mousemove" || e.type == "touchmove"){
+		svg_graph.g.MoveDragged	(mouseX(e)-svg_graph.hw, mouseY(e)-svg_graph.hh);
+		};
+	if (e.type == "mouseup" || e.type == "touchend"){
+		svg_graph.g.StopDragging();
+		};
+	if (e.type == "touchmove"){
+		e.preventDefault();
+		};
+};
+
+
+
 function RedrawGraphs()
 {
-	for (var i = 0; i < todo.length; i++) {
-		todo[i].g.Iterate();
-		Redraw(todo[i]);
+	for (var i = 0; i < todo.length; i++) {		
+		if(keep_moving[i]) {
+			todo[i].g.Iterate();
+			Redraw(todo[i]);
+		}
 	}
 }
 
@@ -34,6 +63,14 @@ function BuildSvgGraph(id)
 	svg_element = document.getElementById(svg_id);
 
 	svg_graph = new SvgGraph(svg_element, graph_spec);
+
+	if ( id==2 || id==4 || id==6 ){
+		svg_graph.g.is3D = false;
+		//svg_graph.g.physics = false;
+		svg_graph.g.repulsion = 4*RepulsionSym;
+		svg_graph.g.attraction = 0.001*AttractionSym;
+	};
+
 	RebuildGraph(svg_graph);
 
 	todo.push(svg_graph);	
@@ -48,6 +85,15 @@ function SvgGraph(svg_element, spec)
 	this.svg = svg_element;
 	
 	var svg = this.svg;
+	svg.addEventListener("mousedown", MouseEvent, false);
+	svg.addEventListener("mousemove", MouseEvent, false);
+	svg.addEventListener("mouseup", MouseEvent, false);
+	
+	svg.addEventListener("touchmove", MouseEvent, false);	
+	svg.addEventListener("touchstart", MouseEvent, false);
+	svg.addEventListener("touchend", MouseEvent, false);
+	svg.addEventListener("touchmove", MouseEvent, false);
+	
 	
 	this.c3d = { camz : 900, ang:0, d:0.015 };
 	
@@ -68,8 +114,6 @@ function SvgGraph(svg_element, spec)
 	
 	this.g.physics = true;
 	this.g.is3D = true;
-	//this.g.Switch3D();
-	//this.g.SwitchPhysics();
 	
 }
 
@@ -116,6 +160,7 @@ function RebuildGraph(svg_graph)
 			c.setAttribute("fill", "#FFFFFF");
 		};	
 		c.setAttribute("stroke", "#000000");
+		if (!svg_graph.g.is3D){c.setAttribute("style", "cursor:move;");};
 		svg.appendChild(c);
 		svg_graph.circs.push(c);
 		
@@ -137,10 +182,14 @@ function Redraw(svg_graph)
 	
 	var c3d = svg_graph.c3d;
 	var g = svg_graph.g;
+
 	
 	c3d.ang += c3d.d;
 	var sn = Math.sin(svg_graph.c3d.ang);
 	var cs = Math.cos(svg_graph.c3d.ang);
+
+	var hw = svg_graph.hw, hh = svg_graph.hh;
+
 	for(var i=0; i<g.graph.n; i++)
 	{
 		var nx, ny, nz;
@@ -155,10 +204,13 @@ function Redraw(svg_graph)
 		v.px = c3d.camz*nx/(c3d.camz - nz);
 		v.py = c3d.camz*ny/(c3d.camz - nz);
 		v.pz = nz;
+
+		if(v.px < -hw+15){v.px = -hw + 15};
+		if(v.py < -hh+15){v.py = -hh + 15};
+		if(v.px > hw-15){v.px = hw - 15};
+		if(v.py > hh-15){v.py = hh - 15};
 	};
 	
-	var hw = svg_graph.hw, hh = svg_graph.hh;
-
 	for(i=0; i<g.graph.edgesl.length; i++)
 	{
 		var u = g.vertices[g.graph.edgesl[i]];
@@ -192,4 +244,37 @@ function getEl(s)
 }
 
 
-function sorter(a,b){return a.z - b.z}
+function mouseX(e)
+{
+
+	id = e.currentTarget.id[3];
+	svg_graph=todo[id-1];
+
+	var cx;
+	if(e.type == "touchstart" || e.type == "touchmove") {
+		cx = e.touches.item(0).clientX;
+	} else {
+		cx = e.clientX;
+	};
+
+	rect = svg_graph.svg.getBoundingClientRect();
+	return (cx-rect.left);
+}
+
+function mouseY(e)
+{	
+	id = e.currentTarget.id[3];
+	svg_graph=todo[id-1];
+
+	var cy;
+	if(e.type == "touchstart" || e.type == "touchmove")	{
+		cy = e.touches.item(0).clientY;
+	} else {
+		cy = e.clientY;
+	};
+
+	rect = svg_graph.svg.getBoundingClientRect();
+	return (cy-rect.top); 
+}
+
+

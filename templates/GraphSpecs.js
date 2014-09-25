@@ -1,4 +1,6 @@
 Height = 600;
 Width = 600;
-Repulsion = 70;
-Attraction = 20;
+Repulsion = 65;
+Attraction = 25;
+RepulsionSym = 50;
+AttractionSym = 80;

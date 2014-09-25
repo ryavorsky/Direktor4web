@@ -2,7 +2,8 @@
 
 
 import math
-
+import os
+import BuildTexts
 
 class SocioGraph :
 
@@ -10,9 +11,12 @@ class SocioGraph :
 
     edge = {}
 
-    def __init__(self):
+    type = ""
+
+    def __init__(self, graph_type):
         self.node = {}
         self.edge = {}
+        self.type = graph_type
 
     def nodes(self) :
         return [v for v in self.node]
@@ -145,6 +149,20 @@ class SocioGraph :
                 max_node_id = node
         return max_node_id
 
+    def isolated_nodes(self):
+        res = []
+        for node in self.nodes():
+            if self.full_degree(node) == 0:
+                res.append(node)
+        return res
+
+    def not_isolated_nodes(self):
+        res = []
+        for node in self.nodes():
+            if self.full_degree(node) > 0:
+                res.append(node)
+        return res
+
     def make_svg(self, file_name='g.svg', size = 800) :
 
         f_out = open(file_name, 'w')
@@ -167,27 +185,40 @@ class SocioGraph :
 
 
     def javascript_code(self):
-        n = max([int(n) for n in self.nodes()])
-        res = str(n) + ":"
-        correct_edges = []
-        for edge in self.edges():
-            if int(edge[0])*int(edge[1]) > 0 :
-                correct_edges.append(edge)
-        edge_codes = [str(edge[0]) + "-" + str(edge[1]) for edge in correct_edges]
+
+        res_n = max([int(n) for n in self.nodes()])
+        res_labels = [str(n+1) for n in range(res_n)]
+        res_edges = self.edges()
+
+        if self.type != "directed":
+            res_labels = self.not_isolated_nodes()
+            res_n = len(res_labels)
+            for i in range(len(res_edges)) :
+                [node0,node1] = res_edges[i]
+                node0_index = res_labels.index(node0)+1
+                node1_index = res_labels.index(node1)+1
+                res_edges[i][0] = str(node0_index)
+                res_edges[i][1] = str(node1_index)
+
+        res = str(res_n) + ":"
+        edge_codes = [str(edge[0]) + "-" + str(edge[1]) for edge in res_edges]
         res = res + ",".join(edge_codes)
         return res
 
 
-def MakeGraphFromEdges(edges, file_name) :
+def MakeGraphFromEdges(size, edges, graph_type, file_name) :
 
-    G = SocioGraph()
+    G = SocioGraph(graph_type)
+
+    for n in range(size):
+        G.add_node(str(n+1))
 
     for pair in edges :
-        G.add_node(pair[0])
-        G.add_node(pair[1])
-
-    for pair in edges :
-        G.add_edge(pair[0], pair[1])
+        if (pair[0] in G.nodes()) and (pair[1] in G.nodes()):
+            G.add_edge(pair[0], pair[1])
+        else :
+            subFolder = os.path.dirname(file_name)
+            BuildTexts.Alert(subFolder, file_name+str(pair))
 
     G.layout()
 

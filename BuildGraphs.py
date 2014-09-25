@@ -29,7 +29,6 @@ def BuildAllGraphs(subFolder, graphData):
 
     # Add graph descriptions for JavaScript
     js_codes = [G.javascript_code() for G in all_graphs]
-    js_codes = [js_codes[i] for i in[0,2,4,6]]
     js_codes = '["' + '",\n"'.join(js_codes) + '"\n]'
 
     jsFileName = os.path.join(subFolder,'GraphSpecs.js')
@@ -45,6 +44,7 @@ def BuildGraphFromSpec(graphData, graph_id, graph_spec, subFolder) :
 
     graph_type = graph_spec.pop()
     questions = graph_spec
+    size = len(graphData)
     file_name = os.path.join(subFolder, 'graph' + graph_id + '.svg')
 
     edges = []
@@ -78,7 +78,7 @@ def BuildGraphFromSpec(graphData, graph_id, graph_spec, subFolder) :
     edges = removeDuplicates(edges)
 
     # build the graph and the visualization
-    G = SocioGraph.MakeGraphFromEdges(edges, file_name)
+    G = SocioGraph.MakeGraphFromEdges(size, edges, graph_type, file_name)
 
     # save the graph statistics
     code = 'val' + BuildTexts.encodeNumber(graph_id) + 'links'

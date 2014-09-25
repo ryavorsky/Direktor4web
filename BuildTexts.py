@@ -22,7 +22,7 @@ def applyMacros(subFolder):
 
     # Substitute the macros into the report template
     htmlReport = open(templateFileName,'r')
-    report = '\n'.join(htmlReport.readlines())
+    report = ''.join(htmlReport.readlines())
     for var in macros :
         print var, macros[var]
         report = report.replace(var, macros[var])
@@ -62,7 +62,7 @@ def replaceInFile(fileName, oldValue, newValue):
 
     # read the current file into a variable
     f = open(fileName,'r')
-    data = '\n'.join(f.readlines())
+    data = ''.join(f.readlines())
     f.close()
 
     data = data.replace(oldValue, newValue)
@@ -88,3 +88,8 @@ def encodeNumber(number) :
         res = res + code[symbol]
 
     return res
+
+def Alert(subFolder, msg):
+    f = open(os.path.join(subFolder,'alerts.txt'),'a')
+    f.write(msg + '\n')
+    f.close

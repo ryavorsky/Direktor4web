@@ -13,7 +13,7 @@ def DataFromFile(rawData, subFolder):
     statData = []
 
     toprow = rawData[0]
-    N = len(rawData) - 1
+    N = len(rawData)
     localId = 0
 
     for line in rawData[1:N] :

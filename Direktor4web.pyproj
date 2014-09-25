@@ -41,8 +41,10 @@
     <Content Include="Charts.html" />
     <Content Include="InstallModules.txt" />
     <Content Include="templates\commands.tex" />
+    <Content Include="templates\GraphSpecs.js" />
     <Content Include="templates\key.txt" />
     <Content Include="templates\Report_template.html" />
+    <Content Include="templates\SvgGraph.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="templates\" />
