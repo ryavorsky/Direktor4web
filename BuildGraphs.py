@@ -28,12 +28,23 @@ def BuildAllGraphs(subFolder, graphData):
         all_graphs.append(G)
 
     # Add graph descriptions for JavaScript
-    js_codes = [G.javascript_code() for G in all_graphs]
-    js_codes = '["' + '",\n"'.join(js_codes) + '"\n]'
+
+    js_specs = []
+    js_labels = []
+
+    for G in all_graphs:
+        [spec,labels] = G.javascript_code()
+        js_specs.append(spec)
+        labels_str = '["' + '","'.join(labels) + '"]'
+        js_labels.append(labels_str)
+
+    js_specs_str = '["' + '",\n    "'.join(js_specs) + '"\n]'
+    js_labels_str = '[' + ',\n    '.join(js_labels) + '\n]'
 
     jsFileName = os.path.join(subFolder,'GraphSpecs.js')
     jsFile = open(jsFileName,'a')
-    jsFile.write('\ngraph_specs = ' + js_codes + ';\n')
+    jsFile.write('\ngraph_specs = ' + js_specs_str + ';\n')
+    jsFile.write('\ngraph_nodes_labels = ' + js_labels_str + ';\n')
     jsFile.close()
 
 

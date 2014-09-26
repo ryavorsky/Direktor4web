@@ -59,14 +59,15 @@ function BuildSvgGraph(id)
 	svg_id = "svg" + String(id);
 	
 	graph_spec = graph_specs[id-1];
+	nodes_labels = graph_nodes_labels[id-1];
+	//nodes_size = graph_nodes_size[id-1];
 	
 	svg_element = document.getElementById(svg_id);
 
-	svg_graph = new SvgGraph(svg_element, graph_spec);
+	svg_graph = new SvgGraph(svg_element, graph_spec, nodes_labels);
 
 	if ( id==2 || id==4 || id==6 ){
 		svg_graph.g.is3D = false;
-		//svg_graph.g.physics = false;
 		svg_graph.g.repulsion = 4*RepulsionSym;
 		svg_graph.g.attraction = 0.001*AttractionSym;
 	};
@@ -78,7 +79,7 @@ function BuildSvgGraph(id)
 
 }
 
-function SvgGraph(svg_element, spec)
+function SvgGraph(svg_element, spec, nodes_labels)
 {
 
 	this.spec = spec;
@@ -100,6 +101,7 @@ function SvgGraph(svg_element, spec)
 	this.circs = [];
 	this.lines = [];
 	this.labls = [];
+	this.labels_text = nodes_labels;
 	
 	this.w = Width-20;
 	this.h = Height-20;
@@ -154,7 +156,7 @@ function RebuildGraph(svg_graph)
 	for(i=0; i<svg_graph.g.graph.n; i++)
 	{
 		var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-		if(i==0){
+		if(svg_graph.labels_text[i]=='1'){
 			c.setAttribute("fill", "#FFFF00");
 		}else{
 			c.setAttribute("fill", "#FFFFFF");
@@ -168,7 +170,7 @@ function RebuildGraph(svg_graph)
 		t.setAttribute("fill", "#000000");
 		t.setAttribute("font-size", "14");
 		t.setAttribute("style",  "pointer-events:none;");
-		t.textContent = i+1;
+		t.textContent = svg_graph.labels_text[i];
 		svg.appendChild(t);
 		svg_graph.labls.push(t);
 	}
