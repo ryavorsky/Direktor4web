@@ -96,7 +96,7 @@ function SvgGraph(svg_element, spec, nodes_labels)
 	svg.addEventListener("touchmove", MouseEvent, false);
 	
 	
-	this.c3d = { camz : 900, ang:0, d:0.015 };
+	this.c3d = { camz : 900, ang:0, d:0.003 };
 	
 	this.circs = [];
 	this.lines = [];
@@ -108,6 +108,7 @@ function SvgGraph(svg_element, spec, nodes_labels)
 	this.hw= this.w/2;
 	this.hh= this.h/2;
 	this.labels = true;
+	this.nodes_size = nodes_size;
 	
 	this.g = new Grapher2D();
 	this.g.repulsion = 4*Repulsion;
@@ -207,6 +208,7 @@ function Redraw(svg_graph)
 		v.py = c3d.camz*ny/(c3d.camz - nz);
 		v.pz = nz;
 
+		// observe the borders
 		if(v.px < -hw+15){v.px = -hw + 15};
 		if(v.py < -hh+15){v.py = -hh + 15};
 		if(v.px > hw-15){v.px = hw - 15};
@@ -224,18 +226,18 @@ function Redraw(svg_graph)
 		svg_graph.lines[i].setAttribute("y2", v.py + hh);
 	};
 	
-	var iw, kw;
+	var dr;
 	for(var i=0; i<g.graph.n; i++)
 	{
 		var v = g.vertices[i];
-		iw = c3d.camz*13/(c3d.camz-v.pz);
 		
 		svg_graph.circs[i].setAttribute("cx", hw+v.px);
 		svg_graph.circs[i].setAttribute("cy", hh+v.py);
-		svg_graph.circs[i].setAttribute("r", Math.max(0,iw));
+		svg_graph.circs[i].setAttribute("r", svg_graph.nodes_size[i]);
 		
-		svg_graph.labls[i].setAttribute("x", hw+v.px-(i>8?10:5));
-		svg_graph.labls[i].setAttribute("y", hh+v.py+6);
+		dr = 4 + (svg_graph.labels_text[i].length - 1)*3;
+		svg_graph.labls[i].setAttribute("x", hw+v.px-dr);
+		svg_graph.labls[i].setAttribute("y", hh+v.py+5);
 	}
 };
 
