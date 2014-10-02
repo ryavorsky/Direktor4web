@@ -158,18 +158,17 @@ function RebuildGraph(svg_graph)
 	{
 		var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 		if(svg_graph.labels_text[i]=='1'){
-			c.setAttribute("fill", "#FFFF00");
+			c.setAttribute("fill", "RGB(255,251,125)");
 		}else{
-			c.setAttribute("fill", "#FFFFFF");
+			c.setAttribute("fill", "RGB(190,190,190)");
 		};	
-		c.setAttribute("stroke", "#000000");
 		if (!svg_graph.g.is3D){c.setAttribute("style", "cursor:move;");};
 		svg.appendChild(c);
 		svg_graph.circs.push(c);
 		
 		var t = document.createElementNS("http://www.w3.org/2000/svg", "text");
 		t.setAttribute("fill", "#000000");
-		t.setAttribute("font-size", "14");
+		t.setAttribute("font-size", "13");
 		t.setAttribute("style",  "pointer-events:none;");
 		t.textContent = svg_graph.labels_text[i];
 		svg.appendChild(t);
@@ -215,10 +214,35 @@ function Redraw(svg_graph)
 		if(v.py > hh-15){v.py = hh - 15};
 	};
 	
-	for(i=0; i<g.graph.edgesl.length; i++)
+	var num_edges = g.graph.edgesl.length;
+	
+	var N_switch = 120;
+	var delta = 20;
+	var selected = Math.floor(step/N_switch) % g.graph.n;
+	var sel_step = step % N_switch;
+	var fraction;
+	if (sel_step <= delta){ fraction = sel_step / delta };
+	if (sel_step > delta) { fraction = 1 };
+	if (sel_step >= N_switch - delta){ fraction = (N_switch-sel_step)/delta };
+	
+	for(i=0; i<num_edges; i++)
 	{
-		var u = g.vertices[g.graph.edgesl[i]];
-		var v = g.vertices[g.graph.edgesr[i]];
+		var u_num = g.graph.edgesl[i];
+		var v_num = g.graph.edgesr[i];
+		var u = g.vertices[u_num];
+		var v = g.vertices[v_num];
+		
+		if (u_num == selected || v_num==selected){
+			brgh1 = String(57 + Math.round((255-57)*fraction));
+			brgh2 = String(101 + Math.round((255-101)*fraction));
+			line_color = "RGB(77," + brgh1 + "," + brgh2 + ")";
+			stroke_width = "1.3";
+		} else {
+			line_color = "RGB(77,121,171)";		
+			stroke_width = "1";
+		};
+		
+		svg_graph.lines[i].setAttribute("style", "stroke:" + line_color + ";stroke-width:" + stroke_width);
 		
 		svg_graph.lines[i].setAttribute("x1", u.px + hw);
 		svg_graph.lines[i].setAttribute("y1", u.py + hh);
@@ -230,6 +254,15 @@ function Redraw(svg_graph)
 	for(var i=0; i<g.graph.n; i++)
 	{
 		var v = g.vertices[i];
+		
+		if (i==selected){
+			circle_color = "RGB(77,255,255)";
+			stroke_width = String(1.1 + fraction*0.2);
+		} else {
+			circle_color = "RGB(121,121,121)";		
+			stroke_width = "1";
+		};
+		svg_graph.circs[i].setAttribute("style", "stroke:" + circle_color + ";stroke-width:" + stroke_width);
 		
 		svg_graph.circs[i].setAttribute("cx", hw+v.px);
 		svg_graph.circs[i].setAttribute("cy", hh+v.py);
