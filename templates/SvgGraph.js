@@ -62,11 +62,11 @@ function BuildSvgGraph(id)
 	
 	graph_spec = graph_specs[id-1];
 	nodes_labels = graph_nodes_labels[id-1];
-	//nodes_size = graph_nodes_size[id-1];
+	nodes_size = graph_nodes_size[id-1];
 	
 	svg_element = document.getElementById(svg_id);
 
-	svg_graph = new SvgGraph(svg_element, graph_spec, nodes_labels);
+	svg_graph = new SvgGraph(svg_element, graph_spec, nodes_labels, nodes_size);
 
 	
 	if ( id==2 || id==4 || id==6 ){
@@ -88,7 +88,7 @@ function BuildSvgGraph(id)
 
 }
 
-function SvgGraph(svg_element, spec, nodes_labels)
+function SvgGraph(svg_element, spec, nodes_labels, nodes_size)
 {
 
 	this.spec = spec;
@@ -163,15 +163,21 @@ function RebuildGraph(svg_graph)
 	for(i=0; i<svg_graph.g.graph.n; i++)
 	{
 		var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+
 		if(svg_graph.labels_text[i]=='1'){
-			c.setAttribute("fill", "RGB(255,251,125)");
+			if (svg_graph.g.is3D){
+				c.setAttribute("fill", "url(#GradientBoss)");
+			} else {
+				c.setAttribute("fill", "RGB(255,251,75)");
+			};
 		}else{
 			if (svg_graph.g.is3D){
-				c.setAttribute("fill", "RGB(190,190,190)");
+				c.setAttribute("fill", "url(#GradientAll)");
 			} else {
-				c.setAttribute("fill", "RGB(255,255,255)");
+				c.setAttribute("fill", "RGB(215,215,225)");
 			};
 		};	
+
 		svg.appendChild(c);
 		svg_graph.circs.push(c);
 		
@@ -250,7 +256,7 @@ function Redraw(svg_graph)
 				line_color = "RGB(77," + brgh1 + "," + brgh2 + ")";
 				stroke_width = "1.3";
 			} else {
-				line_color = "RGB(77,121,171)";		
+				line_color = "RGB(77,111,111)";		
 				stroke_width = "1";
 			};
 		} else {
@@ -276,7 +282,16 @@ function Redraw(svg_graph)
 				circle_color = "RGB(77,255,255)";
 				stroke_width = String(1.1 + fraction*0.2);
 			} else {
-				circle_color = "RGB(121,121,121)";		
+				circle_color = "RGB(121,121,121)";	
+				for(edge=0; edge<num_edges; edge++)
+				{
+					var u_num = g.graph.edgesl[edge];
+					var v_num = g.graph.edgesr[edge];
+					if( ((u_num == selected && v_num == i) || (v_num == selected && u_num == i)) 
+						&& (sel_step < N_switch - delta) && (sel_step > delta) ){
+						circle_color = "RGB(210,255,255)";	
+					}
+				};
 				stroke_width = "1";
 			};
 			circle_style ="stroke:" + circle_color + ";stroke-width:" + stroke_width;

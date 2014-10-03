@@ -1,11 +1,9 @@
 ﻿Height = 600;
 Width = 600;
-Repulsion = 65;
+Repulsion = 75;
 Attraction = 25;
 RepulsionSym = 55;
 AttractionSym = 75;
-
-var nodes_size = [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10]
 
 
 

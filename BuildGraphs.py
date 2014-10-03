@@ -31,20 +31,25 @@ def BuildAllGraphs(subFolder, graphData):
 
     js_specs = []
     js_labels = []
+    js_size = []
 
     for G in all_graphs:
-        [spec,labels] = G.javascript_code()
+        [spec, labels, sizes] = G.javascript_code()
         js_specs.append(spec)
         labels_str = '["' + '","'.join(labels) + '"]'
         js_labels.append(labels_str)
+        size_str = '[' + ','.join(sizes) + ']'
+        js_size.append(size_str)
 
     js_specs_str = '["' + '",\n    "'.join(js_specs) + '"\n]'
     js_labels_str = '[' + ',\n    '.join(js_labels) + '\n]'
+    js_size_str = '[' + ',\n    '.join(js_size) + '\n]'
 
     jsFileName = os.path.join(subFolder,'GraphSpecs.js')
     jsFile = open(jsFileName,'a')
     jsFile.write('\ngraph_specs = ' + js_specs_str + ';\n')
     jsFile.write('\ngraph_nodes_labels = ' + js_labels_str + ';\n')
+    jsFile.write('\ngraph_nodes_size = ' + js_size_str + ';\n')
     jsFile.close()
 
 

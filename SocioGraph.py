@@ -200,9 +200,14 @@ class SocioGraph :
                 res_edges[i][0] = str(node0_index)
                 res_edges[i][1] = str(node1_index)
 
+        res_size = [ self.full_degree(node) for node in res_labels]
+        max_size = max(res_size + [1])
+        min_size = min(res_size)
+        res_size = [str(9 + 6*(size-min_size)/max_size) for size in res_size]
+
         edge_codes = [str(edge[0]) + "-" + str(edge[1]) for edge in res_edges]
         res_spec = str(res_n) + ":" + ",".join(edge_codes)
-        return [res_spec,res_labels]
+        return [res_spec, res_labels, res_size]
 
 
 def MakeGraphFromEdges(size, edges, graph_type, file_name) :
