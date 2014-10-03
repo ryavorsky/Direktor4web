@@ -116,8 +116,32 @@ Grapher2D.prototype.Iterate = function()
 		u.f.z += this.attraction*(v.z - u.z);
 	}
 	
-	var dis = 0;
+	// close distance repulsion
 	var bs = this.bounds;
+	for(i=0; i < this.graph.n; i++) // loop through all nodes
+	{
+		u = this.vertices[i];
+		for (j=0; j < this.graph.n; j++){
+			if(i!=j){
+				v = this.vertices[j];
+				dsq = ((v.x-u.x)*(v.x-u.x)+(v.y-u.y)*(v.y-u.y)+(v.z-u.z)*(v.z-u.z)); // distance squared
+				if(dsq==0) dsq = 0.001;
+				coul = this.repulsion / dsq;
+				v.f.x += coul * (v.x-u.x) / 5;
+				v.f.y += coul * (v.y-u.y) / 5;
+				v.f.z += coul * (v.z-u.z) / 5;
+			}
+		};
+
+		// repulsion from borders
+		var coef = 2;
+		u.f.x += this.repulsion / (Math.abs(u.x - bs.l) + 1) / coef;
+		u.f.x += this.repulsion / (-Math.abs(u.x - bs.r) - 1) / coef;
+		u.f.y += this.repulsion / (Math.abs(u.y - bs.u) + 1) / coef;
+		u.f.y += this.repulsion / (-Math.abs(u.y - bs.d) - 1) / coef ;
+	}
+
+	var dis = 0;
 	for(i=0; i < this.graph.n; i++) // set new positions
 	{
 		v = this.vertices[i];

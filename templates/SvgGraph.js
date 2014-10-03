@@ -27,6 +27,8 @@ function MouseEvent(e){
 	id = e.currentTarget.id[3];
 	svg_graph=todo[id-1];
 
+	if (svg_graph.g.is3D){return};
+
 	if (e.type == "mousedown" || e.type == "touchstart"){
 		svg_graph.g.SetDragged(mouseX(e)-svg_graph.hw, mouseY(e)-svg_graph.hh, 30);
 		};
@@ -66,10 +68,17 @@ function BuildSvgGraph(id)
 
 	svg_graph = new SvgGraph(svg_element, graph_spec, nodes_labels);
 
+	
 	if ( id==2 || id==4 || id==6 ){
 		svg_graph.g.is3D = false;
 		svg_graph.g.repulsion = 4*RepulsionSym;
 		svg_graph.g.attraction = 0.001*AttractionSym;
+		svg_graph.g.damping = 0.63;
+	} else {
+		svg_graph.g.is3D = true;
+		svg_graph.g.repulsion = 4*Repulsion;
+		svg_graph.g.attraction = 0.001*Attraction;
+		svg_graph.g.damping = 0.9;
 	};
 
 	RebuildGraph(svg_graph);
@@ -111,12 +120,9 @@ function SvgGraph(svg_element, spec, nodes_labels)
 	this.nodes_size = nodes_size;
 	
 	this.g = new Grapher2D();
-	this.g.repulsion = 4*Repulsion;
-	this.g.attraction = 0.001*Attraction;
 	this.g.stable = false;
-	
 	this.g.physics = true;
-	this.g.is3D = true;
+	this.g.SetBounds(-this.hw,this.hw,-this.hh,this.hh,-this.hw,this.hw);
 	
 }
 
@@ -160,9 +166,12 @@ function RebuildGraph(svg_graph)
 		if(svg_graph.labels_text[i]=='1'){
 			c.setAttribute("fill", "RGB(255,251,125)");
 		}else{
-			c.setAttribute("fill", "RGB(190,190,190)");
+			if (svg_graph.g.is3D){
+				c.setAttribute("fill", "RGB(190,190,190)");
+			} else {
+				c.setAttribute("fill", "RGB(255,255,255)");
+			};
 		};	
-		if (!svg_graph.g.is3D){c.setAttribute("style", "cursor:move;");};
 		svg.appendChild(c);
 		svg_graph.circs.push(c);
 		
@@ -170,6 +179,7 @@ function RebuildGraph(svg_graph)
 		t.setAttribute("fill", "#000000");
 		t.setAttribute("font-size", "13");
 		t.setAttribute("style",  "pointer-events:none;");
+		t.setAttribute("class", "GraphLabel");
 		t.textContent = svg_graph.labels_text[i];
 		svg.appendChild(t);
 		svg_graph.labls.push(t);
@@ -232,13 +242,19 @@ function Redraw(svg_graph)
 		var u = g.vertices[u_num];
 		var v = g.vertices[v_num];
 		
-		if (u_num == selected || v_num==selected){
-			brgh1 = String(57 + Math.round((255-57)*fraction));
-			brgh2 = String(101 + Math.round((255-101)*fraction));
-			line_color = "RGB(77," + brgh1 + "," + brgh2 + ")";
-			stroke_width = "1.3";
+		if(g.is3D){
+
+			if (u_num == selected || v_num==selected){
+				brgh1 = String(57 + Math.round((255-57)*fraction));
+				brgh2 = String(101 + Math.round((255-101)*fraction));
+				line_color = "RGB(77," + brgh1 + "," + brgh2 + ")";
+				stroke_width = "1.3";
+			} else {
+				line_color = "RGB(77,121,171)";		
+				stroke_width = "1";
+			};
 		} else {
-			line_color = "RGB(77,121,171)";		
+			line_color = "RGB(0,0,0)";		
 			stroke_width = "1";
 		};
 		
@@ -250,19 +266,27 @@ function Redraw(svg_graph)
 		svg_graph.lines[i].setAttribute("y2", v.py + hh);
 	};
 	
-	var dr;
+	var dr, circle_style;
 	for(var i=0; i<g.graph.n; i++)
 	{
 		var v = g.vertices[i];
 		
-		if (i==selected){
-			circle_color = "RGB(77,255,255)";
-			stroke_width = String(1.1 + fraction*0.2);
+		if(g.is3D){
+			if (i==selected){
+				circle_color = "RGB(77,255,255)";
+				stroke_width = String(1.1 + fraction*0.2);
+			} else {
+				circle_color = "RGB(121,121,121)";		
+				stroke_width = "1";
+			};
+			circle_style ="stroke:" + circle_color + ";stroke-width:" + stroke_width;
 		} else {
-			circle_color = "RGB(121,121,121)";		
+			circle_color = "RGB(0,0,0)";		
 			stroke_width = "1";
+			circle_style ="stroke:" + circle_color + ";stroke-width:" + stroke_width + ";cursor:move;";
 		};
-		svg_graph.circs[i].setAttribute("style", "stroke:" + circle_color + ";stroke-width:" + stroke_width);
+
+		svg_graph.circs[i].setAttribute("style", circle_style);
 		
 		svg_graph.circs[i].setAttribute("cx", hw+v.px);
 		svg_graph.circs[i].setAttribute("cy", hh+v.py);
