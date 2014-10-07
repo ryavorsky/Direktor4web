@@ -15,6 +15,11 @@ function Move()
 	setTimeout(Move, 120);
 	RedrawGraphs();
 	step++;
+	if (step>40){
+		todo[1].g.physics = false;
+		todo[3].g.physics = false;
+		todo[5].g.physics = false;
+	}
 };
 
 function StopMoving(id){
@@ -73,12 +78,12 @@ function BuildSvgGraph(id)
 		svg_graph.g.is3D = false;
 		svg_graph.g.repulsion = 4*RepulsionSym;
 		svg_graph.g.attraction = 0.001*AttractionSym;
-		svg_graph.g.damping = 0.63;
+		svg_graph.g.damping = 0.6;
 	} else {
 		svg_graph.g.is3D = true;
 		svg_graph.g.repulsion = 4*Repulsion;
 		svg_graph.g.attraction = 0.001*Attraction;
-		svg_graph.g.damping = 0.9;
+		svg_graph.g.damping = 0.6;
 	};
 
 	RebuildGraph(svg_graph);
@@ -163,6 +168,9 @@ function RebuildGraph(svg_graph)
 	for(i=0; i<svg_graph.g.graph.n; i++)
 	{
 		var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+		var title = document.createElementNS("http://www.w3.org/2000/svg", "title");
+		title.textContent = getName(svg_graph.labels_text[i]);
+		c.appendChild(title);
 
 		if(svg_graph.labels_text[i]=='1'){
 			if (svg_graph.g.is3D){
@@ -317,6 +325,15 @@ function Redraw(svg_graph)
 function getEl(s)
 {
 	return document.getElementById(s);
+}
+
+
+function getName(id)
+{
+	names_list_table = getEl("NamesList");
+	row_index = parseInt(id)+1;
+	res = names_list_table.rows[row_index].cells[1].textContent; 
+	return res;
 }
 
 

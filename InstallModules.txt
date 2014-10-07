@@ -1,3 +1,17 @@
+cd $HOME
+mkdir texlive
+cd texlive
+wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+tar xzf install-tl-unx.tar.gz
+cd install-tl-20141004
+TEXLIVE_INSTALL_PREFIX=$HOME/texlive
+./install-tl
+
+d
+i
+
+
+=======================================================
 Для того, чтобы интерпретатор Python (в данном случае мы описываем интерпретатор 
 версии 2.5), вызванный из консоли, "видел" установленные локально библиотеки, 
 добавьте в файл .profile (в папке $HOME) следующие строки:
