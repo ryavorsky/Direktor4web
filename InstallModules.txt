@@ -7,6 +7,8 @@ cd install-tl-20141004
 TEXLIVE_INSTALL_PREFIX=$HOME/texlive
 ./install-tl
 
+
+
 d
 i
 

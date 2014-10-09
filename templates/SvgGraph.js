@@ -7,6 +7,11 @@ function Start(){
 	for (var i=1; i<7; i++){
 		BuildSvgGraph(i);
 	}
+
+	BuildSvgSingles(2);
+	BuildSvgSingles(4);
+	BuildSvgSingles(6);
+	
 	Move();
 }
 
@@ -371,3 +376,72 @@ function mouseY(e)
 }
 
 
+function BuildSvgSingles(id)
+{
+
+	svg = getEl("svg"+String(id)+"a");
+	total = graph_nodes_labels[0].length;
+	used_labels = graph_nodes_labels[id-1];
+
+	labels = [];
+	for (i=1; i <= total; i++){
+		used = false;
+		for (j=0; j<used_labels.length; j++){
+			used = used || (used_labels[j] == String(i));
+		};
+		if (!used){ labels.push(i); };
+	};
+
+	size = labels.length;
+
+	width = 370; radius = 9; 
+	x_dist = 30; x_offset = 15; 
+	y_dist = 30; y_offset = 15;
+	max_in_row = Math.floor((width - x_offset)/x_dist);
+	rows = Math.floor((size-1)/ max_in_row) + 1;
+	height = y_offset + (rows - 1) * y_dist + radius + 1;
+	svg.setAttribute("height", String(height));
+
+	for (i=0; i<size; i++){
+		var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+		var title = document.createElementNS("http://www.w3.org/2000/svg", "title");
+		title.textContent = getName(labels[i]);
+		c.appendChild(title);
+
+		if(labels[i]==1){
+				c.setAttribute("fill", "RGB(255,251,75)");
+		}else{
+				c.setAttribute("fill", "RGB(215,215,225)");
+		};	
+	
+		
+		x = (i % max_in_row) * x_dist + x_offset;
+		row = Math.floor(i / max_in_row) ;
+		y = y_offset + row * y_dist;
+		
+		
+		c.setAttribute("cx", x);
+		c.setAttribute("cy", y);
+		c.setAttribute("r", radius);
+		circle_color = "RGB(0,0,0)";		
+		stroke_width = "1";
+		circle_style ="stroke:" + circle_color + ";stroke-width:" + stroke_width ;
+		c.setAttribute("style", circle_style);
+		svg.appendChild(c);
+
+		var t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+		var label = String(labels[i]);
+		var dr = 0 + label.length*3;
+		
+		t.setAttribute("fill", "#000000");
+		t.setAttribute("font-size", "11");
+		t.setAttribute("style",  "pointer-events:none;");
+		t.setAttribute("class", "GraphLabel");
+		t.setAttribute("x", x-dr);
+		t.setAttribute("y", y+4);
+		
+		t.textContent = label;
+		svg.appendChild(t);
+
+	}
+}
