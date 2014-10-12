@@ -45,7 +45,7 @@ def BuildAllGraphs(subFolder, graphData):
     js_labels_str = '[' + ',\n    '.join(js_labels) + '\n]'
     js_size_str = '[' + ',\n    '.join(js_size) + '\n]'
 
-    jsFileName = os.path.join(subFolder,'GraphSpecs.js')
+    jsFileName = os.path.join(subFolder,'JavaScript','GraphSpecs.js')
     jsFile = open(jsFileName,'a')
     jsFile.write('\ngraph_specs = ' + js_specs_str + ';\n')
     jsFile.write('\ngraph_nodes_labels = ' + js_labels_str + ';\n')

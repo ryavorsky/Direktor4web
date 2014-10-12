@@ -6,7 +6,7 @@ def CreateReport(subFolder):
 
 
 def applyMacros(subFolder):
-    macrosFileName = os.path.join(subFolder,'commands.tex')
+    macrosFileName = os.path.join(subFolder, 'Tex', 'commands.tex')
     templateFileName = os.path.join(subFolder,'Report_template.html')
 
     # Extract macros
@@ -38,7 +38,7 @@ def addMacro(subFolder, command, value) :
     print 'Adding macro:', subFolder, command, value
     lineToAdd = '\\newcommand{\\' + command +'}{' + str(value) + '}\n'
     
-    fName = os.path.join(subFolder, 'commands.tex')
+    fName = os.path.join(subFolder, 'Tex', 'commands.tex')
     fileOfTexCommands = open(fName, 'a')
     fileOfTexCommands.write(lineToAdd)
     fileOfTexCommands.close()

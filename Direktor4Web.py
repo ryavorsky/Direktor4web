@@ -65,11 +65,16 @@ def MakeSubfolder() :
         print('\nThe output folder is created:\n\t' + subFolder + '\n')
 
         # move the template files into the subfolder
-        inputFiles = os.listdir(templateDir)
-        print str(inputFiles)
-        for fileName in inputFiles:
-            fullFileName = os.path.join(templateDir, fileName)
-            shutil.copy2(fullFileName, subFolder)
+        for fileName in os.listdir(templateDir):
+            sourceFullName = os.path.join(templateDir, fileName)
+            if os.path.isdir(sourceFullName) :
+                destFolder = os.path.join(subFolder, fileName)
+                os.mkdir(destFolder)
+                for subFileName in os.listdir(sourceFullName) :
+                    fullFileName = os.path.join(sourceFullName, subFileName)
+                    shutil.copy2(fullFileName, destFolder)
+            else :
+                shutil.copy2(sourceFullName, subFolder)
 
         shutil.copy2(inputFileName, os.path.join(subFolder, 'InputData'+ '_' + timestamp + '.txt'))
         print('\nTemplate files copied to ' + subFolder + '\n')

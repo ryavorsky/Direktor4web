@@ -4,16 +4,13 @@ import shutil
 import os
 import math
 
-def YesNoPie(subFolder, fileName, yesNum = 11, noNum = 5) :
-    shutil.copy2(os.path.join(subFolder,'diag.png'), os.path.join(subFolder,fileName))
-    return
 
-def Pie(subFolder = 'c:\\tmp\\', fileName = 'pie1.svg', data = [10,20,70], size = 400):
+def Pie(subFolder, fileName, data, size = 400):
     
     if data.count(0) == len(data) :
-        shutil.copy2(os.path.join(subFolder,'empty.svg'), os.path.join(subFolder,fileName))
+        shutil.copy2(os.path.join(subFolder,'SVG','empty.svg'), os.path.join(subFolder,'SVG',fileName))
     elif data.count(0) == len(data) - 1 :
-        shutil.copy2(os.path.join(subFolder,'pie_yes.svg'), os.path.join(subFolder,fileName))
+        shutil.copy2(os.path.join(subFolder,'SVG','pie_yes.svg'), os.path.join(subFolder,'SVG',fileName))
     else :
         total = 0        
         for value in data :
@@ -27,7 +24,7 @@ def Pie(subFolder = 'c:\\tmp\\', fileName = 'pie1.svg', data = [10,20,70], size 
         y1 = cy
         startAngle = 0
 
-        f_out = open(os.path.join(subFolder, fileName), 'w')
+        f_out = open(os.path.join(subFolder, 'SVG', fileName), 'w')
         header = '<?xml version="1.0" standalone="no"?>\n<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" '
         header = header + '"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n'
         header = header + '<svg height="' + str(size) + '" width="' + str(size) + '" version="1.1"'
@@ -58,15 +55,15 @@ def Pie(subFolder = 'c:\\tmp\\', fileName = 'pie1.svg', data = [10,20,70], size 
         f_out.close()
 
 
-def YesNoPieSVG(subFolder = 'c:\\tmp\\', fileName = 'pie1.svg', yesNum = 27, noNum = 5, size = 400) :
+def YesNoPieSVG(subFolder, fileName, yesNum, noNum, size = 400) :
 
     print '\nBuilding Yes/No pie:', yesNum, noNum, size
     if (yesNum == 0) and (noNum == 0) :
-        shutil.copy2(os.path.join(subFolder,'empty.svg'), os.path.join(subFolder,fileName))
+        shutil.copy2(os.path.join(subFolder,'SVG','empty.svg'), os.path.join(subFolder,'SVG',fileName))
     elif (yesNum == 0) :
-        shutil.copy2(os.path.join(subFolder,'pie_no.svg'), os.path.join(subFolder,fileName))
+        shutil.copy2(os.path.join(subFolder,'SVG','pie_no.svg'), os.path.join(subFolder,'SVG',fileName))
     elif (noNum == 0) :
-        shutil.copy2(os.path.join(subFolder,'pie_yes.svg'), os.path.join(subFolder,fileName))
+        shutil.copy2(os.path.join(subFolder,'SVG','pie_yes.svg'), os.path.join(subFolder,'SVG',fileName))
     else :
         cx = int(size/2.0)
         cy = int(size/2.0)
@@ -97,7 +94,7 @@ def YesNoPieSVG(subFolder = 'c:\\tmp\\', fileName = 'pie1.svg', yesNum = 27, noN
         res = res + '\t<path fill="#00FF00" stroke="#000000" d="' + d1 + '"></path>\n'
         res = res + '</svg>\n'
 
-        f_out = open(os.path.join(subFolder, fileName), 'w')
+        f_out = open(os.path.join(subFolder, 'SVG', fileName), 'w')
         f_out.write(res)
         f_out.close()
 

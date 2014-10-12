@@ -5,7 +5,7 @@ import BuildTexts
 
 def buildNamesListFile(subFolder, statData):
 
-    resFileName =  os.path.join(subFolder, 'nameslist.tex')
+    resFileName =  os.path.join(subFolder, 'Tex', 'nameslist.tex')
     f = open(resFileName, 'w')
 
     localId = 0
@@ -16,7 +16,7 @@ def buildNamesListFile(subFolder, statData):
         name = data[6].split('=')[1]
         position = data[7].split('=')[1]
         resLine = '\item [' + str(localId) + '] ' + name + ', ' + position + '\n'
-        f.write(resLine) #.decode("CP1251").encode("UTF-8"))
+        f.write(resLine) 
 
     f.close()
 
@@ -51,12 +51,12 @@ def addSizeComments(subFolder, numOfNodes) :
     else :
         res = '\socioSizeTextE'
 
-    fileName = os.path.join(subFolder, 'commands.tex')
-    BuildTexts.replaceInFile(fileName,res,'\socioSizeComment')
+    fileName = os.path.join(subFolder, 'Tex', 'commands.tex')
+    BuildTexts.replaceInFile(fileName, res, '\socioSizeComment')
 
 
 def computeRating(subFolder, sectionId, G) :
-    fileName = os.path.join(subFolder, 'table'+sectionId+'.tex')
+    fileName = os.path.join(subFolder, 'Tex', 'table'+sectionId+'.tex')
     print '\nBuilding table ', fileName
     names = extractNames(subFolder)
 
@@ -100,7 +100,7 @@ def cmp(x, y) :
 
 def extractNames(subFolder) :
     names = dict()
-    f = open(os.path.join(subFolder, 'nameslist.tex'),'r')
+    f = open(os.path.join(subFolder, 'Tex', 'nameslist.tex'),'r')
 
     for line in f.readlines() :
         p1 = line.find('[')
