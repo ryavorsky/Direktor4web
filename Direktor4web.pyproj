@@ -40,16 +40,12 @@
   <ItemGroup>
     <Content Include="Charts.html" />
     <Content Include="InstallModules.txt" />
-    <Content Include="templates\commands.tex" />
-    <Content Include="templates\Grapher2D.js" />
-    <Content Include="templates\GraphSpecs.js" />
     <Content Include="templates\JavaScript\Graph.js" />
     <Content Include="templates\JavaScript\Grapher2D.js" />
     <Content Include="templates\JavaScript\GraphSpecs.js" />
     <Content Include="templates\JavaScript\SvgGraph.js" />
     <Content Include="templates\key.txt" />
     <Content Include="templates\Report_template.html" />
-    <Content Include="templates\SvgGraph.js" />
     <Content Include="templates\SVG\empty.svg" />
     <Content Include="templates\SVG\pie_no.svg" />
     <Content Include="templates\SVG\pie_yes.svg" />

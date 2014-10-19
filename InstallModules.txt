@@ -1,3 +1,44 @@
+wget http://nodejs.org/dist/node-v0.1.97.tar.gz
+tar -xvf node-v0.1.97.tar.gz
+//либо делаем так
+
+git clone git://github.com/ry/node.git
+cd node*
+./configure
+make
+make install
+++++++++++++++++++++++++++++++++++++++++++++++
+
+sudo apt-get install librsvg2-bin
+
+==================
+
+Установка SVG2PNG конвертера http://xmlgraphics.apache.org/batik/tools/rasterizer.html
+
+- скачиваем Java http://javadl.sun.com/webapps/download/AutoDL?BundleId=97358
+http://javadl.sun.com/webapps/download/AutoDL?BundleId=97360
+
+- перейдите в каталог, в который необходимо выполнить установку
+cd /java/
+
+- Переместите архивированный двоичный файл .tar.gz в текущий каталог.
+
+- Распакуйте tar-архив и установите Java 
+tar zxvf jre-7u7-linux-i586.tar.gz
+
+- Удалите файл .tar.gz, если необходимо сэкономить пространство на диске.
+
+В итоге у меня осталось 161 Мб
+
+Скачиваем http://apache-mirror.rbc.ru/pub/apache/xmlgraphics/batik/batik-1.7-jre13.zip
+
+Раззипуем
+unzip batik-1.7-jre13.zip
+Удаляем архив
+rm batik-1.7-jre13.zip
+
+-----------------------------------------------------------------------
+
 cd $HOME
 mkdir texlive
 cd texlive
