@@ -5,9 +5,9 @@ for %%i in (*.zip) do (
 	cd %%~ni
 	set subfolder = %%i
 	echo Subfolder %CD%\%%~ni
-	mkdir PNG
 	cd SVG
-	FOR %%A IN (*.svg) DO "c:\Program Files\Inkscape\inkscape.com" -f "%CD%\%%~ni\SVG\%%A" -e "%CD%\%%~ni\PNG\%%~nA.png"
-	cd ..
+	FOR %%A IN (*.svg) DO "c:\Program Files\Inkscape\inkscape.com" -f "%CD%\%%~ni\SVG\%%A" -e "%CD%\%%~ni\Tex\%%~nA.png"
+	cd ..\Tex
+	"C:\Program Files\MiKTeX 2.9\miktex\bin\pdflatex.exe" Result.tex
 	cd ..
 	)
