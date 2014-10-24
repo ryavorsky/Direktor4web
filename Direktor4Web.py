@@ -2,6 +2,7 @@ import time
 import os
 import shutil
 import sys
+import zipfile
 
 import ParseInput
 import StatValues
@@ -15,7 +16,7 @@ outputDir = "c:\\Direktor4web\\reports\\"
 todoFileName = "c:\\Direktor4web\\todo.txt"
 
 def Main(): 
-
+    
     print 'Make subfolders. '
     [subFolder, rawData] = MakeSubfolder()
 
@@ -32,6 +33,11 @@ def Main():
 
         print 'Create the final report. '
         BuildTexts.CreateReport(subFolder)
+
+        print 'Create ZIP of the final report. '
+        os.chdir(outputDir)
+
+        zipdir(subFolder, outputDir)
 
 
 # Create subfolder for the report files (charts, graphs, lists, texts etc)
@@ -80,6 +86,18 @@ def MakeSubfolder() :
         print('\nTemplate files copied to ' + subFolder + '\n')
 
         return [subFolder, rawData]
+
+
+def zipdir(subFolder, outputDir):
+    os.path.basename(subFolder)
+    zipname = os.path.join(outputDir, os.path.basename(subFolder) + '.zip')
+    zipf = zipfile.ZipFile(zipname, 'w')
+    for root, dirs, files in os.walk(subFolder):
+        for file in files:
+            prefix = os.path.relpath(root)
+            print prefix, file
+            zipf.write(os.path.join(prefix, file))
+    zipf.close()    
 
 
 Main()
