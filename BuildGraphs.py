@@ -22,6 +22,7 @@ graph_specs = {
 def BuildAllGraphs(subFolder, graphData):
 
     all_graphs = []
+
     # Build specific graphs for the report
     for graph_id in graph_sequence :
         G = BuildGraphFromSpec(graphData, graph_id, graph_specs[graph_id], subFolder)
@@ -61,7 +62,7 @@ def BuildGraphFromSpec(graphData, graph_id, graph_spec, subFolder) :
     graph_type = graph_spec.pop()
     questions = graph_spec
     size = len(graphData)
-    file_name = os.path.join(subFolder, 'graph' + graph_id + '.svg')
+    file_name = os.path.join(subFolder, 'SVG', 'graph' + graph_id + '.dot')
 
     edges = []
     dict = {}
@@ -95,6 +96,7 @@ def BuildGraphFromSpec(graphData, graph_id, graph_spec, subFolder) :
 
     # build the graph and the visualization
     G = SocioGraph.MakeGraphFromEdges(size, edges, graph_type, file_name)
+
 
     # save the graph statistics
     code = 'val' + BuildTexts.encodeNumber(graph_id) + 'links'

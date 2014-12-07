@@ -202,12 +202,48 @@ class SocioGraph :
 
         res_size = [ self.full_degree(node) for node in res_labels]
         max_size = max(res_size + [1])
-        min_size = min(res_size)
+        min_size = min(res_size + [1])  # add 1 to avoid empty list
         res_size = [str(9 + 6*(size-min_size)/max_size) for size in res_size]
 
         edge_codes = [str(edge[0]) + "-" + str(edge[1]) for edge in res_edges]
         res_spec = str(res_n) + ":" + ",".join(edge_codes)
         return [res_spec, res_labels, res_size]
+
+
+    def make_dot(self, file_name='g.dot', size = 800) :
+
+        f_out = open(file_name, 'w')
+        
+        header = 'digraph G {\n overlap="scale"; \n'
+        f_out.write(header)
+
+        res = ''
+        if (self.type == 'directed') :
+            max_degree = max ([self.in_degree(node_id) for node_id in self.nodes()]) + 1.0
+        else :
+            max_degree = max ([self.full_degree(node_id) for node_id in self.nodes()]) + 1.0
+
+        for node_id in self.nodes() :
+            if (self.type == 'directed') :
+                degree = self.in_degree(node_id)
+            else :
+                degree = self.full_degree(node_id)
+
+            size = str(0.7 + 0.7*degree/max_degree)
+            if (self.full_degree(node_id) > 0) or (self.type == 'directed'):
+                if (node_id == '1') :
+                    fillcolor = '#FFFAAA'
+                else :
+                    fillcolor = '#EEEEEE'
+                res = res + node_id + '[shape="circle"; width="' + size + '", fontsize="32", fixedsize=true, style=filled, fillcolor="'+fillcolor+'"];\n'
+
+        for edge_id in self.edge :
+            res = res + self.edge[edge_id]['source'] + ' -> ' + self.edge[edge_id]['target'] + '[len="2.7"];\n'
+
+        f_out.write(res)
+        f_out.write('}\n')
+        f_out.close()
+
 
 
 def MakeGraphFromEdges(size, edges, graph_type, file_name) :
@@ -226,7 +262,7 @@ def MakeGraphFromEdges(size, edges, graph_type, file_name) :
 
     G.layout()
 
-    G.make_svg(file_name)
+    G.make_dot(file_name)
 
     print 'Ok!\n', 'Nodes :', G.node, '\nEdges :', G.edge
 

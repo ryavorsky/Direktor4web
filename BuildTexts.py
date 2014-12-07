@@ -1,6 +1,9 @@
 import os
 
-def CreateReport(subFolder):
+def CreateReport(subFolder, orgSize):
+
+    if orgSize > 37 :
+        splitTables(subFolder, orgSize)
 
     applyMacros(subFolder)
 
@@ -89,7 +92,91 @@ def encodeNumber(number) :
 
     return res
 
+
 def Alert(subFolder, msg):
     f = open(os.path.join(subFolder,'alerts.txt'),'a')
     f.write(msg + '\n')
     f.close
+
+
+def splitTables(subFolder, orgSize):
+
+    print '\nSplitting tables'
+
+    files = ['table61.tex', 'table711.tex', 'table721.tex', 'table731.tex']
+    files = [os.path.join(subFolder, 'Tex', name) for name in files]
+    list_split = os.path.join(subFolder, 'Tex', 'list_split.tex')
+    table_split = os.path.join(subFolder, 'Tex', 'table_split.tex')
+
+    insertFileaAfterLine(os.path.join(subFolder, 'Tex', 'nameslist.tex'), list_split, 35)
+
+    for fileName in files :
+        insertFileaAfterLine(fileName, table_split, 35)
+
+    if orgSize > 76 :
+        insertFileaAfterLine(os.path.join(subFolder,'Tex','nameslist.tex'), list_split, 85)
+
+        for fileName in files :
+            insertFileaAfterLine(fileName, table_split, 105)
+
+    # now insert the tables into the slides - TeX does not like neseted includes
+    print '\nInserting tables'
+    specs = [['slide1b.tex','nameslist.tex'],['slide6_3.tex','table61.tex'],['slide7_3a.tex','table711.tex'],['slide7_3b.tex','table721.tex'],['slide7_3c.tex','table731.tex'],]
+    for spec in specs :
+        (fileName, addFileName) = spec
+        file_name = os.path.join(subFolder, 'Tex', fileName)
+        oldValue = '\input{'+ addFileName + '}'
+        data_file = open(os.path.join(subFolder, 'Tex', addFileName), 'r')
+        newValue = ' '.join(data_file.readlines())
+        data_file.close()
+        replaceInFile(file_name, oldValue, newValue)
+
+
+def insertFileaAfterLine(fileName, addFileName, lineNum):
+    f1 = open(fileName, 'r')
+    f2 = open(addFileName, 'r')
+    data = []
+    i = 1
+    for line in f1.readlines() :
+        if i <> lineNum :
+            data.append(line)
+            i += 1
+        else :
+            data.append(line)
+            for additionalLine in f2.readlines() :
+                data.append(additionalLine)
+            i += 1
+
+    f1.close()
+    f2.close()
+
+    f1 = open(fileName, 'w')
+    for dataLine in data:
+        f1.write(dataLine)
+    f1.close()
+
+def replaceLineWithFile(fileName, addFileName, lineNum):
+    f1 = open(fileName, 'r')
+    f2 = open(addFileName, 'r')
+    print 'Replacing line with file:', fileName, addFileName, lineNum
+    data = []
+    i = 1
+    for line in f1.readlines() :
+        if i <> lineNum :
+            data.append(line)
+            i += 1
+        else :
+            for additionalLine in f2.readlines() :
+                data.append(additionalLine)
+            i += 1
+
+    f1.close()
+    f2.close()
+
+    f1 = open(fileName, 'w')
+    print 'Write result'
+    for dataLine in data:
+        print dataLine
+        f1.write(dataLine)
+    f1.close()
+   

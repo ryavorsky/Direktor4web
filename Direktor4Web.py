@@ -32,7 +32,7 @@ def Main():
         BuildGraphs.BuildAllGraphs(subFolder, graphData)
 
         print 'Create the final report. '
-        BuildTexts.CreateReport(subFolder)
+        BuildTexts.CreateReport(subFolder, len(statData))
 
         print 'Create ZIP of the final report. '
         os.chdir(outputDir)

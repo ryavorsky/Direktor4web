@@ -16,12 +16,12 @@ def Pie(subFolder, fileName, data, size = 400):
         for value in data :
             total = total + value
 
-        cx = int(size/2.0)
-        cy = int(size/2.0)
-        r = int(size/2.0) - 5
+        cx = int(size/2.0)    # center x
+        cy = int(size/2.0)    # center y
+        r = int(size/2.0) - 5 # radius
 
-        x1 = cx + r
-        y1 = cy
+        x1 = cx + r      # start point of the arc 
+        y1 = cy          # 
         startAngle = 0
 
         f_out = open(os.path.join(subFolder, 'SVG', fileName), 'w')
@@ -65,14 +65,17 @@ def YesNoPieSVG(subFolder, fileName, yesNum, noNum, size = 400) :
     elif (noNum == 0) :
         shutil.copy2(os.path.join(subFolder,'SVG','pie_yes.svg'), os.path.join(subFolder,'SVG',fileName))
     else :
-        cx = int(size/2.0)
+        cx = int(size/2.0)     # center
         cy = int(size/2.0)
-        r = int(size/2.0) - 5
+        r = int(size/2.0) - 5  # radius
 
-        x1 = cx + r
+        x1 = cx + r        # start point
         y1 = cy
 
-        angle = 2.0 * math.pi * noNum/(yesNum + noNum);
+        yesP = int(round(100.0 * yesNum/(yesNum + noNum)))
+        noP = int(round(100.0 * noNum/(yesNum + noNum)))
+
+        angle = 2.0 * math.pi * noNum/(yesNum + noNum); # the angle
 
         x2 = cx + int (r * math.cos(angle))
         y2 = cy + int (r * math.sin(angle))
@@ -82,8 +85,24 @@ def YesNoPieSVG(subFolder, fileName, yesNum, noNum, size = 400) :
         else :
             flag0, flag1 = '1', '0'
 
+        # the red and the green parts
         d0 = "M" + str(cx) + "," + str(cy) + " L" + str(x1) + "," + str(y1) + " A" + str(r) + "," + str(r)+ ",0," + flag0 + ",1," + str(x2) + "," + str(y2) + "Z";
         d1 = "M" + str(cx) + "," + str(cy) + " L" + str(x2) + "," + str(y2) + " A" + str(r) + "," + str(r)+ ",0," + flag1 + ",1," + str(x1) + "," + str(y1) + "Z";
+
+        # the text labels
+        ang_no_label  = 0.5 * angle 
+        ang_yes_label = 0.5 * angle + math.pi
+        r_no = 0.7 * r
+        r_yes = 0.7 * r  
+
+        no_label_x = cx + int (r_no * math.cos(ang_no_label))
+        no_label_y = cy + int (r_no * math.sin(ang_no_label)) + 10
+        no_label_svg = '\t<text x="'+ str(no_label_x) +'" y="'+ str(no_label_y) +'" style="text-anchor: middle; font-family:arial; fill:black; font-size: 36px;">'+str(noP)+'%</text>\n'
+
+        yes_label_x = cx + int (r_yes * math.cos(ang_yes_label))
+        yes_label_y = cy + int (r_yes * math.sin(ang_yes_label)) + 10
+        yes_label_svg = '\t<text x="'+ str(yes_label_x) +'" y="'+ str(yes_label_y) +'" style="text-anchor: middle; font-family:arial; fill:black; font-size: 36px;">'+str(yesP)+'%</text>\n'
+
 
         res = '<?xml version="1.0" standalone="no"?>\n<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" '
         res = res + '"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n'
@@ -92,6 +111,7 @@ def YesNoPieSVG(subFolder, fileName, yesNum, noNum, size = 400) :
         res = res + ' xmlns="http://www.w3.org/2000/svg">\n\t<desc>Yes-no pie chart</desc>\n'
         res = res + '\t<path fill="#FF0000" stroke="#000000" d="' + d0 + '"></path>\n'
         res = res + '\t<path fill="#00FF00" stroke="#000000" d="' + d1 + '"></path>\n'
+        res = res + no_label_svg + yes_label_svg
         res = res + '</svg>\n'
 
         f_out = open(os.path.join(subFolder, 'SVG', fileName), 'w')
